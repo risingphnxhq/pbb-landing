@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Intake — Rising Phoenix</title>
+<style>
+body {
+  background: #0B0F14;
+  color: #F5EFE6;
+  font-family: Georgia, serif;
+  padding: 40px;
+}
+.container {
+  max-width: 600px;
+  margin: auto;
+}
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background: #121C26;
+  border: none;
+  color: white;
+}
+button {
+  background: #D6B36A;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Business Intake</h2>
+
+<form id="intakeForm">
+
+<input type="text" placeholder="Full Name" required>
+<input type="email" placeholder="Email" required>
+<input type="text" placeholder="Business Name">
+
+<select>
+  <option value="foundation">Foundation</option>
+  <option value="structure">Structure</option>
+  <option value="scale">Scale</option>
+</select>
+
+<button type="submit">Submit Intake</button>
+
+</form>
+</div>
+
+<script>
+document.getElementById("intakeForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  alert("Intake submitted. Execution will begin.");
+});
+</script>
+
+</body>
+</html> 
