@@ -207,13 +207,15 @@ if (DEMO_MODE) {
       statusBox.textContent = "";
 
       const payload = {
-        full_name: document.getElementById("full_name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        business_name: document.getElementById("business_name").value.trim() || null,
-        selected_tier: document.getElementById("selected_tier").value,
-        notes: document.getElementById("notes").value.trim() || null
-      };
+    full_name: document.getElementById("full_name").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    business_name: document.getElementById("business_name").value.trim() || null,
+    selected_tier: document.getElementById("selected_tier").value,
+    notes: document.getElementById("notes").value.trim() || null
+};
 
+// ADD THIS RIGHT HERE
+localStorage.setItem("pbb_intake", JSON.stringify(payload)); 
       try {
         const response = await fetch(`${SUPABASE_URL}/rest/v1/pbb_intakes`, {
           method: "POST",
