@@ -106,12 +106,22 @@ Answer the following:
 
 <script>
 document.getElementById("probeForm").addEventListener("submit", function(e){
-  e.preventDefault();
+    e.preventDefault();
 
-  // For now, redirect to output
-  window.location.href = "/output.html";
+    const probeData = {
+        acquisition_channel: document.getElementById("acquisition_channel").value,
+        revenue_consistency: document.getElementById("revenue_consistency").value
+    };
+
+    const intake = JSON.parse(localStorage.getItem("pbb_intake") || "{}");
+
+    const fullData = {
+        ...intake,
+        ...probeData
+    };
+
+    localStorage.setItem("pbb_full", JSON.stringify(fullData));
+
+    window.location.href = "/output.html";
 });
-</script>
-
-</body>
-</html> 
+</script> 
