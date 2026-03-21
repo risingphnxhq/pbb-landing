@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Business Probe — Rising Phoenix</title>
+<style>
+body {
+  background: #0B0F14;
+  color: #F5EFE6;
+  font-family: Georgia, serif;
+  padding: 40px;
+}
+.container {
+  max-width: 700px;
+  margin: auto;
+}
+h1 {
+  font-size: 34px;
+  margin-bottom: 10px;
+}
+p {
+  opacity: 0.8;
+  margin-bottom: 30px;
+}
+label {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+select, textarea {
+  width: 100%;
+  padding: 12px;
+  background: #121C26;
+  border: none;
+  color: white;
+}
+button {
+  margin-top: 30px;
+  width: 100%;
+  padding: 15px;
+  background: #D6B36A;
+  border: none;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>Precision Business Probe</h1>
+<p>
+To generate your execution plan, we need a deeper look into your operations.
+Answer the following:
+</p>
+
+<form id="probeForm">
+
+<label>Primary Acquisition Channel</label>
+<select required>
+  <option value="">Select</option>
+  <option>Paid Ads</option>
+  <option>Organic / Social</option>
+  <option>Referrals</option>
+  <option>Outbound</option>
+</select>
+
+<label>Revenue Consistency</label>
+<select required>
+  <option value="">Select</option>
+  <option>Stable</option>
+  <option>Inconsistent</option>
+  <option>Declining</option>
+</select>
+
+<label>Offer Structure</label>
+<select required>
+  <option value="">Select</option>
+  <option>Single Offer</option>
+  <option>Multiple Offers</option>
+  <option>Unclear</option>
+</select>
+
+<label>Team Structure</label>
+<select required>
+  <option value="">Select</option>
+  <option>Solo</option>
+  <option>Small Team</option>
+  <option>Structured Organization</option>
+</select>
+
+<label>Biggest Bottleneck</label>
+<select required>
+  <option value="">Select</option>
+  <option>Sales</option>
+  <option>Operations</option>
+  <option>Fulfillment</option>
+  <option>Clarity</option>
+</select>
+
+<button type="submit">Generate Execution Plan</button>
+
+</form>
+
+</div>
+
+<script>
+document.getElementById("probeForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  // For now, redirect to output
+  window.location.href = "/next-step.html";
+});
+</script>
+
+</body>
+</html> 
