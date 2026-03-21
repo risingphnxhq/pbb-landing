@@ -197,7 +197,8 @@ if (DEMO_MODE) {
     submitBtn.disabled = false;
     submitBtn.textContent = "Submit Intake";
 
-    return; // ⛔ stops Supabase call completely
+    window.location.href = "/probe.html";  // redirects to probe (skips Supabase in demo mode) 
+    return;
 } 
       submitBtn.disabled = true;
       submitBtn.textContent = "Submitting...";
