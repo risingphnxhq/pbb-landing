@@ -1,65 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Business Intake — Rising Phoenix</title>
-<style>
-body {
-  background: #0B0F14;
-  color: #F5EFE6;
-  font-family: Georgia, serif;
-  padding: 40px;
-}
-.container {
-  max-width: 600px;
-  margin: auto;
-}
-input, select {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  background: #121C26;
-  border: none;
-  color: white;
-}
-button {
-  background: #D6B36A;
-  border: none;
-  padding: 12px;
-  width: 100%;
-  cursor: pointer;
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PBB Intake — Rising Phoenix</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --panel: #121c26;
+      --line: rgba(255,255,255,0.08);
+      --text: #f5efe6;
+      --muted: rgba(245,239,230,0.72);
+      --gold: #d6b36a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #0b0f14 0%, #0f1720 100%);
+      color: var(--text);
+      font-family: Georgia, serif;
+      padding: 40px 16px;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 32px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 38px;
+    }
+
+    p {
+      margin: 0 0 24px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 14px 14px;
+      background: #0f1720;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--text);
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 15px 18px;
+      background: var(--gold);
+      color: #0b0f14;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 16px;
+      letter-spacing: 0.04em;
+    }
+
+    button:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    .status {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 10px;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .status.success {
+      display: block;
+      background: rgba(60, 130, 90, 0.18);
+      border: 1px solid rgba(60, 130, 90, 0.35);
+      color: #dff5e4;
+    }
+
+    .status.error {
+      display: block;
+      background: rgba(160, 60, 60, 0.18);
+      border: 1px solid rgba(160, 60, 60, 0.35);
+      color: #ffe5e5;
+    }
+
+    .small {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
 </head>
-
 <body>
+  <div class="container">
+    <h1>Business Intake</h1>
+    <p>
+      Your payment has been confirmed. Complete this intake so Rising Phoenix can
+      place you into the correct execution path.
+    </p>
 
-<div class="container">
-<h2>Business Intake</h2>
+    <form id="intakeForm">
+      <div class="field">
+        <label for="full_name">Full Name</label>
+        <input id="full_name" name="full_name" type="text" required />
+      </div>
 
-<form id="intakeForm">
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required />
+      </div>
 
-<input type="text" placeholder="Full Name" required>
-<input type="email" placeholder="Email" required>
-<input type="text" placeholder="Business Name">
+      <div class="field">
+        <label for="business_name">Business Name</label>
+        <input id="business_name" name="business_name" type="text" />
+      </div>
 
-<select>
-  <option value="foundation">Foundation</option>
-  <option value="structure">Structure</option>
-  <option value="scale">Scale</option>
-</select>
+      <div class="field">
+        <label for="selected_tier">Selected Tier</label>
+        <select id="selected_tier" name="selected_tier" required>
+          <option value="">Select tier</option>
+          <option value="foundation">Foundation</option>
+          <option value="structure">Structure</option>
+          <option value="scale">Scale</option>
+        </select>
+      </div>
 
-<button type="submit">Submit Intake</button>
+      <div class="field">
+        <label for="notes">Primary Objective</label>
+        <textarea id="notes" name="notes" placeholder="State your current objective."></textarea>
+      </div>
 
-</form>
-</div>
+      <button id="submitBtn" type="submit">Submit Intake</button>
+    </form>
 
-<script>
-document.getElementById("intakeForm").addEventListener("submit", function(e){
-  e.preventDefault();
-  alert("Intake submitted. Execution will begin.");
-});
-</script>
+    <div id="statusBox" class="status"></div>
 
+    <div class="small">
+      After submission, your intake is captured and prepared for tier-based routing.
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = "https://oyjmpbuxvfxusmbouldi.supabase.co";
+
+    const SUPABASE_ANON_KEY = "sb_publishable_rwTE4QRlQkz7oR0f5t5y1A_a9z";
+
+    const form = document.getElementById("intakeForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const statusBox = document.getElementById("statusBox");
+
+    function showStatus(type, message) {
+      statusBox.className = `status ${type}`;
+      statusBox.textContent = message;
+    }
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting...";
+
+      statusBox.className = "status";
+      statusBox.textContent = "";
+
+      const payload = {
+        full_name: document.getElementById("full_name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        business_name: document.getElementById("business_name").value.trim() || null,
+        selected_tier: document.getElementById("selected_tier").value,
+        notes: document.getElementById("notes").value.trim() || null
+      };
+
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/pbb_intakes`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+            "Prefer": "return=representation"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const errText = await response.text();
+          throw new Error(errText || "Insert failed");
+        }
+
+        const result = await response.json();
+        console.log("PBB intake stored:", result);
+
+        showStatus(
+          "success",
+          "Intake submitted successfully. Your business has been captured and is being prepared for routing."
+        );
+
+        form.reset();
+      } catch (error) {
+        console.error(error);
+        showStatus(
+          "error",
+          "Submission failed. Check your Supabase URL, publishable key, table setup, and RLS policy, then try again."
+        );
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Intake";
+      }
+    });
+  </script>
 </body>
 </html> 
