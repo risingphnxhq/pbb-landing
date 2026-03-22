@@ -42,7 +42,7 @@
     }
 
     .wrap {
-      width: min(1100px, calc(100% - 32px));
+      width: min(1120px, calc(100% - 32px));
       margin: 40px auto 64px;
     }
 
@@ -158,12 +158,13 @@
       line-height: 1.45;
     }
 
-    .rsl-grid {
+    .signal-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
     }
 
+    .signal-card,
     .rsl-card {
       border-radius: 18px;
       padding: 18px 18px 16px;
@@ -171,12 +172,14 @@
       background: rgba(255,255,255,0.025);
     }
 
+    .signal-card h3,
     .rsl-card h3 {
       margin: 0 0 10px;
       font-size: 1.1rem;
       font-weight: 600;
     }
 
+    .signal-state,
     .rsl-state {
       display: inline-block;
       margin-bottom: 10px;
@@ -187,6 +190,7 @@
       text-transform: uppercase;
     }
 
+    .signal-card p,
     .rsl-card p {
       margin: 0;
       font-size: 0.98rem;
@@ -307,12 +311,12 @@
 
     @media (max-width: 860px) {
       .summary-grid,
-      .rsl-grid {
+      .signal-grid {
         grid-template-columns: 1fr;
       }
 
       .wrap {
-        width: min(100% - 20px, 1100px);
+        width: min(100% - 20px, 1120px);
         margin: 18px auto 36px;
       }
 
@@ -366,8 +370,29 @@
         </section>
 
         <section class="section">
+          <p class="label">Intelligence Layer</p>
+          <div class="signal-grid">
+            <div class="signal-card">
+              <h3>Constraint Severity</h3>
+              <span class="signal-state state-amber" id="constraint-severity-state">Moderate</span>
+              <p id="constraint-severity-text"></p>
+            </div>
+            <div class="signal-card">
+              <h3>System Stability</h3>
+              <span class="signal-state state-amber" id="system-stability-state">Variable</span>
+              <p id="system-stability-text"></p>
+            </div>
+            <div class="signal-card">
+              <h3>Execution Risk</h3>
+              <span class="signal-state state-amber" id="execution-risk-state">Managed Risk</span>
+              <p id="execution-risk-text"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
           <p class="label">RSL Assessment</p>
-          <div class="rsl-grid">
+          <div class="signal-grid">
             <div class="rsl-card">
               <h3>Readiness</h3>
               <span class="rsl-state state-amber" id="readiness-state">Limited</span>
@@ -462,112 +487,195 @@
       const el = document.getElementById(id);
       if (!el) return;
       el.textContent = stateText;
-      el.className = `rsl-state ${toneClass}`;
+      el.className = `${el.classList.contains("signal-state") ? "signal-state" : "rsl-state"} ${toneClass}`;
     }
 
     const tier = (data.selected_tier || "").toLowerCase();
     const bottleneck = (data.biggest_bottleneck || "").toLowerCase();
 
     let classification = "Structure Phase — Constrained Execution State";
-    let diagnosis = "The business is currently operating with structural inconsistencies across its acquisition and conversion layers, limiting the ability to generate stable and repeatable revenue.";
-    let revenueImpact = "Revenue generation is being constrained by variability in input channels and conversion instability, preventing the system from achieving predictable performance.";
+    let diagnosis = "The business is currently operating in a constrained execution condition. Core functions may exist, but they are not yet sufficiently integrated into a dependable operating system. As a result, effort is being applied without enough structural reinforcement, which reduces control, weakens consistency, and limits the ability to produce reliable commercial outcomes.";
+    let revenueImpact = "Revenue is being suppressed by structural inconsistency rather than simple effort shortage. The business may be producing activity, but weak alignment across positioning, delivery, and execution control is causing leakage between opportunity creation and realised revenue. In practical terms, the system is allowing value to dissipate before it can compound.";
     let executionPriorities = [
-      "identify the dominant operational constraint",
-      "clarify structural weaknesses across core functions",
-      "establish a more controlled execution baseline",
-      "prepare the business for repeatable growth conditions"
+      "identify the dominant structural constraint that is preventing commercial consistency",
+      "tighten operational alignment across the primary business functions responsible for acquisition, delivery, and control",
+      "establish a more stable execution baseline before attempting broader expansion or increased workload",
+      "convert current activity into a repeatable operating rhythm capable of supporting stronger revenue retention"
     ];
 
     let readinessState = "Limited";
     let readinessTone = "state-amber";
-    let readinessText = "The current operational structure is not yet sufficiently stabilized to support consistent execution at scale.";
+    let readinessText = "The business has movement, but its current internal structure is not yet stabilized enough to support dependable execution under pressure.";
 
     let scopeState = "Misaligned";
     let scopeTone = "state-amber";
-    let scopeText = "Core components of the business model require tighter alignment before expansion can be supported responsibly.";
+    let scopeText = "The primary business components are not yet aligned tightly enough to support expansion without additional friction.";
 
     let loadState = "Elevated";
     let loadTone = "state-amber";
-    let loadText = "Execution demand is exceeding current structural capacity, increasing friction and reducing consistency.";
+    let loadText = "Current effort levels are placing pressure on a structure that is not yet fully prepared to absorb complexity cleanly.";
+
+    let constraintSeverityState = "Moderate";
+    let constraintSeverityTone = "state-amber";
+    let constraintSeverityText = "The dominant constraint is materially affecting performance, but it appears identifiable and correctable through structured intervention.";
+
+    let systemStabilityState = "Variable";
+    let systemStabilityTone = "state-amber";
+    let systemStabilityText = "The business is capable of movement, but results are not yet being produced through a sufficiently stable internal system.";
+
+    let executionRiskState = "Managed Risk";
+    let executionRiskTone = "state-amber";
+    let executionRiskText = "Continued execution is possible, but without structural correction the current operating pattern is likely to preserve inefficiency.";
 
     if (bottleneck === "sales") {
       classification = "Sales Phase — Conversion Constraint State";
-      diagnosis = "The business is currently experiencing a sales-side constraint, indicating that acquisition inputs are not being converted through a sufficiently controlled commercial pathway. Commercial effort is present; however, conversion architecture is not producing reliable close performance.";
-      revenueImpact = "Revenue performance is being limited by conversion inefficiency. Demand activity is occurring, but the commercial system is not structured to translate attention into stable revenue with sufficient consistency.";
+      diagnosis = "The business is currently underperforming at the conversion layer. Demand activity may be present, but the commercial system is not moving prospects through a controlled path from interest to commitment. This usually indicates weakness in offer positioning, sales sequencing, objection handling, close architecture, or the handoff logic between marketing activity and revenue capture. The result is not a lack of effort, but a failure to convert commercial motion into dependable outcomes.";
+      revenueImpact = "Revenue is being constrained by conversion inefficiency rather than pure lead scarcity. Attention may be entering the system, but it is not being translated into cash flow at the rate required for predictable growth. This creates hidden loss in the form of under-converted demand, slower close velocity, unstable cash generation, and a weaker return on acquisition effort.";
       executionPriorities = [
-        "stabilise conversion flow across the sales process",
-        "tighten offer positioning and value articulation",
-        "reduce friction within the buyer progression path",
-        "improve consistency between demand generation and close rate"
+        "stabilise and standardise the end-to-end conversion architecture across inquiry, qualification, offer presentation, and close",
+        "strengthen offer positioning so the value case becomes more decisive at key buyer decision points",
+        "remove structural friction across the buyer progression path, especially where interest currently stalls before commitment",
+        "synchronise demand generation with closing capacity so revenue performance reflects actual commercial input"
       ];
 
       readinessState = "Conditional";
-      readinessText = "Commercial movement exists, but conversion control is not yet sufficiently developed to support efficient scale.";
+      readinessTone = "state-amber";
+      readinessText = "Commercial movement exists, but the conversion layer is not yet strong enough to support efficient scaling with confidence.";
+
       scopeState = "Defined";
       scopeTone = "state-green";
-      scopeText = "The dominant constraint is commercially identifiable and can be addressed through targeted structural correction.";
+      scopeText = "The dominant weakness is commercially identifiable and can be addressed through focused sales-side correction.";
+
       loadState = "Elevated";
-      loadText = "Revenue pressure remains high because effort is outpacing conversion efficiency.";
+      loadTone = "state-amber";
+      loadText = "Revenue pressure remains elevated because acquisition effort is outpacing the system’s ability to convert cleanly.";
+
+      constraintSeverityState = "High";
+      constraintSeverityTone = "state-red";
+      constraintSeverityText = "The core revenue engine is being materially weakened because interest is not reliably progressing into committed business.";
+
+      systemStabilityState = "Unstable";
+      systemStabilityTone = "state-red";
+      systemStabilityText = "Commercial outcomes are too dependent on variable execution rather than a consistently performing conversion system.";
+
+      executionRiskState = "High Risk";
+      executionRiskTone = "state-red";
+      executionRiskText = "Without correction, the business is likely to keep spending effort to generate demand that fails to convert at the required rate.";
     } else if (bottleneck === "operations") {
       classification = "Operations Phase — Internal Strain State";
-      diagnosis = "The business is currently operating with operational strain, indicating that internal execution systems are not adequately supporting delivery, coordination, and workflow consistency. This condition reduces organisational efficiency and limits the ability to scale cleanly.";
-      revenueImpact = "Revenue is being constrained by internal delivery inefficiency. Even where demand exists, the system is not structured to fulfil, manage, or scale execution cleanly.";
+      diagnosis = "The business is currently experiencing internal operational strain. This means commercial or service activity may exist, but the underlying execution environment is not sufficiently organised to support dependable delivery, coordination, or workflow control. Bottlenecks are likely forming inside the business rather than at the market edge, which reduces speed, creates internal drag, and weakens management visibility.";
+      revenueImpact = "Revenue is being constrained by internal execution inefficiency. Even where demand or opportunity exists, the business is losing value through workflow friction, inconsistent handoffs, slower delivery cycles, and reduced operational capacity. In effect, the system is not yet built to monetise its activity as efficiently as it should.";
       executionPriorities = [
-        "restore operational clarity across core workflows",
-        "standardise execution procedures and internal control points",
-        "reduce process fragmentation across service delivery",
-        "create a more repeatable operating environment"
+        "restore operational clarity across the core workflows that control delivery, coordination, and task ownership",
+        "standardise execution procedures and control points so performance is not dependent on memory, improvisation, or reactive correction",
+        "reduce process fragmentation across fulfilment, internal communication, and day-to-day operational movement",
+        "establish a more repeatable operating rhythm capable of handling increased volume without accumulating internal strain"
       ];
 
       readinessState = "Limited";
-      readinessText = "Operational infrastructure is not yet stable enough to support higher execution volume without added strain.";
+      readinessTone = "state-amber";
+      readinessText = "Operational infrastructure is not yet stable enough to absorb more activity without compounding friction.";
+
       scopeState = "Defined";
       scopeTone = "state-green";
-      scopeText = "The primary weakness is operational and can be corrected through internal system restructuring.";
+      scopeText = "The primary weakness is internal and operational, which makes the correction path more structurally knowable.";
+
       loadState = "High";
       loadTone = "state-red";
-      loadText = "Current structural load is exceeding internal workflow capacity, increasing delivery friction and execution drag.";
+      loadText = "Current structural load is exceeding workflow capacity and is increasing execution drag across the business.";
+
+      constraintSeverityState = "High";
+      constraintSeverityTone = "state-red";
+      constraintSeverityText = "The dominant issue is materially degrading execution consistency and limiting the business’s internal ability to support growth.";
+
+      systemStabilityState = "Fragile";
+      systemStabilityTone = "state-red";
+      systemStabilityText = "The business is functioning, but the internal system is not yet stable enough to maintain performance under sustained pressure.";
+
+      executionRiskState = "High Risk";
+      executionRiskTone = "state-red";
+      executionRiskText = "Continuing to add volume without operational restructuring is likely to intensify breakdown points and reduce reliability.";
     } else if (bottleneck === "fulfillment") {
       classification = "Fulfilment Phase — Delivery Weakness State";
-      diagnosis = "The business is currently experiencing a fulfilment-side weakness, indicating that client delivery architecture is not sufficiently aligned with commercial promise. This creates downstream inconsistency, trust erosion, and reduced retention strength.";
-      revenueImpact = "Revenue is being constrained by delivery inconsistency, downstream trust erosion, and reduced retention capacity. The system is not currently structured to support dependable fulfilment at the standard required for repeatable growth.";
+      diagnosis = "The business is currently experiencing a fulfilment-side weakness. The commercial promise being made upstream is not yet matched by a delivery system strong enough to support consistent downstream execution. This creates tension between what is sold and what is reliably fulfilled, which tends to weaken trust, retention, and long-term client value.";
+      revenueImpact = "Revenue is being constrained not only at the point of sale, but after the sale through delivery inconsistency and weaker retention conditions. When fulfilment is unstable, the business loses more than immediate efficiency. It also loses repeatability, client confidence, referral strength, and the ability to compound value from each acquired customer.";
       executionPriorities = [
-        "strengthen delivery consistency across fulfilment workflows",
-        "align client fulfilment systems with commercial promise",
-        "reduce downstream service friction and handoff failure",
-        "improve retention conditions through stronger execution control"
+        "strengthen fulfilment consistency across the delivery chain so commercial promise and client experience become more tightly aligned",
+        "repair weak handoffs, service inconsistencies, and post-sale friction that are currently degrading trust and retention",
+        "build stronger operational controls inside delivery so fulfilment quality is less dependent on improvised execution",
+        "improve the downstream client experience to support retention, continuity, and stronger revenue durability over time"
       ];
 
       readinessState = "Conditional";
-      readinessText = "Core commercial activity may continue, but fulfilment architecture must be strengthened before scale can be supported safely.";
+      readinessTone = "state-amber";
+      readinessText = "Commercial activity can continue, but fulfilment architecture must be strengthened before scale can be supported safely.";
+
       scopeState = "Defined";
       scopeTone = "state-green";
-      scopeText = "The dominant weakness is clearly located in delivery and post-sale execution.";
+      scopeText = "The dominant weakness is clearly located in post-sale execution and delivery reliability.";
+
       loadState = "Elevated";
-      loadText = "Service strain is increasing because fulfilment capacity is not keeping pace with execution demands.";
+      loadTone = "state-amber";
+      loadText = "Delivery strain is increasing because fulfilment capacity and control are not keeping pace with execution demand.";
+
+      constraintSeverityState = "High";
+      constraintSeverityTone = "state-red";
+      constraintSeverityText = "The constraint is materially weakening trust, retention, and the business’s ability to compound revenue beyond the initial sale.";
+
+      systemStabilityState = "Variable";
+      systemStabilityTone = "state-amber";
+      systemStabilityText = "The business can produce results, but delivery stability is not yet strong enough to protect consistency at higher volume.";
+
+      executionRiskState = "Elevated Risk";
+      executionRiskTone = "state-amber";
+      executionRiskText = "Without fulfilment correction, additional growth may amplify client dissatisfaction and downstream performance loss.";
     } else if (bottleneck === "clarity") {
       classification = "Positioning Phase — Clarity Deficit State";
-      diagnosis = "The business is currently operating with a clarity deficit across positioning, offer articulation, and commercial direction. This reduces decision quality, weakens market communication, and introduces friction into acquisition and conversion activity.";
-      revenueImpact = "Revenue is being constrained by unclear market communication and weakened positioning precision. In its current form, the system is not capturing demand efficiently because value translation remains inconsistent.";
+      diagnosis = "The business is currently operating with a clarity deficit across positioning, offer articulation, and commercial direction. This means the value being created may be real, but it is not yet being translated into a sufficiently clear market narrative. When this occurs, buyer understanding weakens, decision confidence drops, and demand is harder to capture with efficiency.";
+      revenueImpact = "Revenue is being constrained by imprecise value translation. The business may have a workable service or offer, but unclear positioning is causing leakage before conversion even begins. This reduces lead quality, weakens buyer confidence, lengthens decision cycles, and lowers the effectiveness of both marketing and sales activity.";
       executionPriorities = [
-        "clarify offer architecture and commercial positioning",
-        "improve message precision across demand-facing surfaces",
-        "align primary objective with a cleaner growth pathway",
-        "remove ambiguity from the buyer decision environment"
+        "clarify offer architecture so the business communicates a sharper and more commercially decisive value proposition",
+        "improve message precision across all demand-facing surfaces so the market can understand what is being offered and why it matters",
+        "align the primary business objective with a cleaner growth path that reduces strategic ambiguity",
+        "remove confusion from the buyer decision environment so attention can convert into stronger commercial movement"
       ];
 
       readinessState = "Conditional";
-      readinessText = "The business may be commercially active, but strategic clarity is not yet strong enough to support efficient growth.";
+      readinessTone = "state-amber";
+      readinessText = "The business may be active, but strategic clarity is not yet strong enough to support efficient growth.";
+
       scopeState = "Unclear";
       scopeTone = "state-red";
       scopeText = "Positioning and offer scope require clarification before the system can operate with sufficient commercial precision.";
+
       loadState = "Elevated";
-      loadText = "Strategic ambiguity is increasing friction across execution and reducing overall system efficiency.";
+      loadTone = "state-amber";
+      loadText = "Strategic ambiguity is increasing friction across acquisition, decision-making, and broader execution.";
+
+      constraintSeverityState = "Moderate";
+      constraintSeverityTone = "state-amber";
+      constraintSeverityText = "The constraint is meaningful because it affects the full revenue path, but it is often correctable through clearer strategic positioning.";
+
+      systemStabilityState = "Variable";
+      systemStabilityTone = "state-amber";
+      systemStabilityText = "The business has underlying potential, but market-facing communication is not yet stable enough to support efficient performance.";
+
+      executionRiskState = "Managed Risk";
+      executionRiskTone = "state-amber";
+      executionRiskText = "The business can continue to move, but ongoing ambiguity will keep reducing conversion efficiency until clarity improves.";
     }
 
+    text("position-classification", classification);
     text("diagnosis", diagnosis);
     text("revenue-impact", revenueImpact);
-    text("position-classification", classification);
+
+    setState("constraint-severity-state", constraintSeverityState, constraintSeverityTone);
+    setState("system-stability-state", systemStabilityState, systemStabilityTone);
+    setState("execution-risk-state", executionRiskState, executionRiskTone);
+
+    text("constraint-severity-text", constraintSeverityText);
+    text("system-stability-text", systemStabilityText);
+    text("execution-risk-text", executionRiskText);
 
     setState("readiness-state", readinessState, readinessTone);
     setState("scope-state", scopeState, scopeTone);
