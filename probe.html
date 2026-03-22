@@ -57,46 +57,46 @@ Answer the following:
 <form id="probeForm">
 
 <label>Primary Acquisition Channel</label>
-<select required>
+<select id="acquisition_channel" required>
   <option value="">Select</option>
-  <option>Paid Ads</option>
-  <option>Organic / Social</option>
-  <option>Referrals</option>
-  <option>Outbound</option>
-</select>
-
-<label>Revenue Consistency</label>
-<select required>
+  <option value="paid_ads">Paid Ads</option>
+  <option value="organic_social">Organic / Social</option>
+  <option value="referrals">Referrals</option>
+  <option value="outbound">Outbound</option>
+</select> 
+  
+  <label>Revenue Consistency</label>
+<select id="revenue_consistency" required>
   <option value="">Select</option>
-  <option>Stable</option>
-  <option>Inconsistent</option>
-  <option>Declining</option>
+  <option value="stable">Stable</option>
+  <option value="inconsistent">Inconsistent</option>
+  <option value="declining">Declining</option>
 </select>
 
 <label>Offer Structure</label>
-<select required>
+<select id="offer_structure" required>
   <option value="">Select</option>
-  <option>Single Offer</option>
-  <option>Multiple Offers</option>
-  <option>Unclear</option>
+  <option value="single_offer">Single Offer</option>
+  <option value="multiple_offers">Multiple Offers</option>
+  <option value="unclear">Unclear</option>
 </select>
 
 <label>Team Structure</label>
-<select required>
+<select id="team_structure" required>
   <option value="">Select</option>
-  <option>Solo</option>
-  <option>Small Team</option>
-  <option>Structured Organization</option>
+  <option value="solo">Solo</option>
+  <option value="small_team">Small Team</option>
+  <option value="structured_organization">Structured Organization</option>
 </select>
 
 <label>Biggest Bottleneck</label>
-<select required>
+<select id="biggest_bottleneck" required>
   <option value="">Select</option>
-  <option>Sales</option>
-  <option>Operations</option>
-  <option>Fulfillment</option>
-  <option>Clarity</option>
-</select>
+  <option value="sales">Sales</option>
+  <option value="operations">Operations</option>
+  <option value="fulfillment">Fulfillment</option>
+  <option value="clarity">Clarity</option>
+</select> 
 
 <button type="submit">Generate Execution Plan</button>
 
@@ -110,7 +110,10 @@ document.getElementById("probeForm").addEventListener("submit", function(e){
 
     const probeData = {
         acquisition_channel: document.getElementById("acquisition_channel").value,
-        revenue_consistency: document.getElementById("revenue_consistency").value
+        revenue_consistency: document.getElementById("revenue_consistency").value,
+        offer_structure: document.getElementById("offer_structure").value,
+        team_structure: document.getElementById("team_structure").value,
+        biggest_bottleneck: document.getElementById("biggest_bottleneck").value
     };
 
     const intake = JSON.parse(localStorage.getItem("pbb_intake") || "{}");
