@@ -1,732 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Phoenix Business System — Diagnostic Output</title>
-  <style>
-    :root {
-      --bg-primary: #0b0f14;
-      --bg-secondary: #101722;
-      --panel: rgba(255,255,255,0.04);
-      --panel-border: rgba(255,255,255,0.08);
-      --text-primary: #f5efe6;
-      --text-secondary: rgba(245,239,230,0.78);
-      --gold: #c7a15b;
-      --gold-soft: rgba(199,161,91,0.18);
-      --line: rgba(255,255,255,0.08);
-      --blue-soft: rgba(68,115,255,0.16);
-      --blue-border: rgba(68,115,255,0.24);
-      --green-soft: rgba(57,140,89,0.16);
-      --green-border: rgba(57,140,89,0.30);
-      --amber-soft: rgba(184,134,11,0.16);
-      --amber-border: rgba(184,134,11,0.30);
-      --red-soft: rgba(170,72,72,0.16);
-      --red-border: rgba(170,72,72,0.30);
-      --shadow: 0 20px 60px rgba(0,0,0,0.35);
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Phoenix Business System — Diagnostic Output</title>
 
-    * {
-      box-sizing: border-box;
-    }
+<style>
+:root {
+  --bg: #0b0f14;
+  --panel: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.08);
+  --text: #f5efe6;
+  --sub: rgba(245,239,230,0.7);
+  --gold: #c7a15b;
+  --red: #aa4848;
+  --amber: #b8860b;
+  --green: #398c59;
+}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.04), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(68,115,255,0.08), transparent 24%),
-        linear-gradient(180deg, #0a0e13 0%, #0b0f14 100%);
-      color: var(--text-primary);
-      font-family: Georgia, "Times New Roman", serif;
-    }
+body {
+  margin:0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Georgia, serif;
+}
 
-    .wrap {
-      width: min(1120px, calc(100% - 32px));
-      margin: 40px auto 64px;
-    }
+.wrap {
+  max-width:1100px;
+  margin:40px auto;
+  padding:20px;
+}
 
-    .shell {
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-      border: 1px solid var(--panel-border);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-    }
+.card {
+  background: var(--panel);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:24px;
+  margin-bottom:20px;
+}
 
-    .header {
-      padding: 28px 30px 22px;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
+h1,h2 {
+  margin:0 0 10px;
+}
 
-    .eyebrow {
-      margin: 0 0 8px;
-      font-size: 13px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(245,239,230,0.55);
-    }
+.small {
+  color: var(--sub);
+  font-size:14px;
+}
 
-    h1 {
-      margin: 0;
-      font-size: clamp(2rem, 3.6vw, 3.4rem);
-      line-height: 0.98;
-      font-weight: 600;
-      letter-spacing: -0.03em;
-    }
+.score-box {
+  display:flex;
+  gap:20px;
+  align-items:center;
+}
 
-    .subhead {
-      margin: 14px 0 0;
-      max-width: 820px;
-      font-size: 1.04rem;
-      line-height: 1.7;
-      color: var(--text-secondary);
-    }
+.score {
+  font-size:48px;
+  color:var(--gold);
+}
 
-    .badge {
-      white-space: nowrap;
-      padding: 12px 18px;
-      border-radius: 999px;
-      border: 1px solid rgba(199,161,91,0.25);
-      background: rgba(199,161,91,0.10);
-      color: var(--text-primary);
-      font-size: 0.92rem;
-      letter-spacing: 0.04em;
-    }
+.band {
+  padding:6px 12px;
+  border-radius:999px;
+}
 
-    .content {
-      padding: 30px;
-      display: grid;
-      gap: 22px;
-    }
+.red { background: rgba(170,72,72,0.2); }
+.amber { background: rgba(184,134,11,0.2); }
+.green { background: rgba(57,140,89,0.2); }
 
-    .section {
-      background: var(--panel);
-      border: 1px solid var(--panel-border);
-      border-radius: 22px;
-      padding: 24px 24px 22px;
-    }
+ul { line-height:1.7; }
 
-    .section h2 {
-      margin: 0 0 16px;
-      font-size: 1.7rem;
-      line-height: 1.1;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
-
-    .label {
-      margin: 0 0 10px;
-      font-size: 0.9rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(245,239,230,0.55);
-    }
-
-    .callout {
-      border-left: 3px solid var(--gold);
-      padding-left: 16px;
-    }
-
-    .callout p,
-    .section p {
-      margin: 0 0 14px;
-      color: var(--text-secondary);
-      font-size: 1.04rem;
-      line-height: 1.75;
-    }
-
-    .callout p:last-child,
-    .section p:last-child {
-      margin-bottom: 0;
-    }
-
-    .classification {
-      display: inline-block;
-      padding: 12px 16px;
-      border-radius: 14px;
-      border: 1px solid rgba(199,161,91,0.25);
-      background: rgba(199,161,91,0.10);
-      color: var(--text-primary);
-      font-size: 1.08rem;
-      line-height: 1.45;
-    }
-
-    .signal-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-
-    .signal-card,
-    .rsl-card {
-      border-radius: 18px;
-      padding: 18px 18px 16px;
-      border: 1px solid var(--panel-border);
-      background: rgba(255,255,255,0.025);
-    }
-
-    .signal-card h3,
-    .rsl-card h3 {
-      margin: 0 0 10px;
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
-
-    .signal-state,
-    .rsl-state {
-      display: inline-block;
-      margin-bottom: 10px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 0.82rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .signal-card p,
-    .rsl-card p {
-      margin: 0;
-      font-size: 0.98rem;
-      line-height: 1.65;
-      color: var(--text-secondary);
-    }
-
-    .state-green {
-      background: var(--green-soft);
-      border: 1px solid var(--green-border);
-      color: #cfe8d5;
-    }
-
-    .state-amber {
-      background: var(--amber-soft);
-      border: 1px solid var(--amber-border);
-      color: #ead9a9;
-    }
-
-    .state-red {
-      background: var(--red-soft);
-      border: 1px solid var(--red-border);
-      color: #efc0c0;
-    }
-
-    .priority-list {
-      margin: 0;
-      padding-left: 22px;
-      color: var(--text-secondary);
-    }
-
-    .priority-list li {
-      margin: 0 0 12px;
-      line-height: 1.7;
-      padding-left: 4px;
-    }
-
-    .priority-list li:last-child {
-      margin-bottom: 0;
-    }
-
-    .summary-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 14px;
-    }
-
-    .meta-box {
-      border: 1px solid var(--panel-border);
-      background: rgba(255,255,255,0.025);
-      border-radius: 18px;
-      padding: 18px;
-    }
-
-    .meta-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--line);
-      color: var(--text-secondary);
-      font-size: 0.96rem;
-    }
-
-    .meta-row:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .meta-row:first-child {
-      padding-top: 0;
-    }
-
-    .meta-key {
-      color: rgba(245,239,230,0.58);
-    }
-
-    .next-step {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .cta {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 58px;
-      padding: 14px 22px;
-      border-radius: 14px;
-      background: linear-gradient(180deg, #ecd8a0 0%, #cfb06d 100%);
-      color: #1b1610;
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      border: 1px solid rgba(0,0,0,0.18);
-      transition: transform 0.18s ease, filter 0.18s ease;
-    }
-
-    .cta:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.02);
-    }
-
-    .muted-note {
-      color: rgba(245,239,230,0.58);
-      font-size: 0.92rem;
-      line-height: 1.6;
-    }
-
-    .footer-note {
-      padding: 0 30px 30px;
-      color: rgba(245,239,230,0.48);
-      font-size: 0.86rem;
-      line-height: 1.6;
-    }
-
-    @media (max-width: 860px) {
-      .summary-grid,
-      .signal-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .wrap {
-        width: min(100% - 20px, 1120px);
-        margin: 18px auto 36px;
-      }
-
-      .header,
-      .content,
-      .footer-note {
-        padding-left: 18px;
-        padding-right: 18px;
-      }
-
-      .section {
-        padding: 20px 18px;
-      }
-    }
-  </style>
+.cta {
+  display:block;
+  margin-top:20px;
+  padding:14px;
+  text-align:center;
+  background: linear-gradient(#ecd8a0,#cfb06d);
+  color:#000;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:600;
+}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="shell">
-      <div class="header">
-        <div>
-          <p class="eyebrow">Phoenix Business System</p>
-          <h1>Diagnostic Output — Structural Assessment</h1>
-          <p class="subhead">
-            This assessment reflects current operational posture, structural constraints, and execution readiness based on the information provided through the PBS intake and probe sequence.
-          </p>
-        </div>
-        <div class="badge" id="system-badge">Operational Review Active</div>
-      </div>
 
-      <div class="content">
-        <section class="section">
-          <p class="label">Position Classification</p>
-          <div class="classification" id="position-classification">
-            Structure Phase — Constrained Execution State
-          </div>
-        </section>
+<div class="wrap">
 
-        <section class="section">
-          <p class="label">Structural Diagnosis</p>
-          <div class="callout">
-            <p id="diagnosis"></p>
-          </div>
-        </section>
-
-        <section class="section">
-          <p class="label">Revenue Impact</p>
-          <div class="callout">
-            <p id="revenue-impact"></p>
-          </div>
-        </section>
-
-        <section class="section">
-          <p class="label">Intelligence Layer</p>
-          <div class="signal-grid">
-            <div class="signal-card">
-              <h3>Constraint Severity</h3>
-              <span class="signal-state state-amber" id="constraint-severity-state">Moderate</span>
-              <p id="constraint-severity-text"></p>
-            </div>
-            <div class="signal-card">
-              <h3>System Stability</h3>
-              <span class="signal-state state-amber" id="system-stability-state">Variable</span>
-              <p id="system-stability-text"></p>
-            </div>
-            <div class="signal-card">
-              <h3>Execution Risk</h3>
-              <span class="signal-state state-amber" id="execution-risk-state">Managed Risk</span>
-              <p id="execution-risk-text"></p>
-            </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <p class="label">RSL Assessment</p>
-          <div class="signal-grid">
-            <div class="rsl-card">
-              <h3>Readiness</h3>
-              <span class="rsl-state state-amber" id="readiness-state">Limited</span>
-              <p id="readiness-text"></p>
-            </div>
-            <div class="rsl-card">
-              <h3>Scope</h3>
-              <span class="rsl-state state-amber" id="scope-state">Misaligned</span>
-              <p id="scope-text"></p>
-            </div>
-            <div class="rsl-card">
-              <h3>Load</h3>
-              <span class="rsl-state state-amber" id="load-state">Elevated</span>
-              <p id="load-text"></p>
-            </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <p class="label">Execution Priorities</p>
-          <ul class="priority-list" id="execution-priorities"></ul>
-        </section>
-
-        <section class="section">
-          <div class="summary-grid">
-            <div class="meta-box">
-              <p class="label">Submitted Profile</p>
-              <div class="meta-row">
-                <span class="meta-key">Business</span>
-                <span id="business-name">—</span>
-              </div>
-              <div class="meta-row">
-                <span class="meta-key">Tier Selected</span>
-                <span id="selected-tier">—</span>
-              </div>
-              <div class="meta-row">
-                <span class="meta-key">Primary Objective</span>
-                <span id="primary-objective">—</span>
-              </div>
-              <div class="meta-row">
-                <span class="meta-key">Constraint Signal</span>
-                <span id="bottleneck-display">—</span>
-              </div>
-            </div>
-
-            <div class="meta-box next-step">
-              <div>
-                <p class="label">Recommended Path</p>
-                <p id="recommended-path" style="margin:0;color:var(--text-secondary);line-height:1.75;">
-                  You are positioned for the Phoenix Business Builder.
-                </p>
-              </div>
-              <a class="cta" id="cta-link" href="#">Proceed to Structured Execution</a>
-              <div class="muted-note" id="cta-note">
-                This pathway is intended to align structure, improve execution control, and support more repeatable growth conditions.
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <div class="footer-note">
-        PBS outputs are issued as structured readiness determinations. They are intended to classify condition, define constraint, and direct the next execution path under controlled system logic.
-      </div>
-    </div>
+  <div class="card">
+    <h1>Operational Diagnostic Output</h1>
+    <p class="small">Structured assessment of business condition and progression readiness.</p>
   </div>
 
-  <script>
-    const data = JSON.parse(localStorage.getItem("pbb_full") || "{}");
+  <!-- PRS SCORE -->
+  <div class="card">
+    <h2>Phoenix Rating Score (PRS)</h2>
+    <div class="score-box">
+      <div class="score" id="prs-score">--</div>
+      <div class="band" id="score-band">--</div>
+    </div>
+    <p class="small" id="score-meaning"></p>
+  </div>
 
-    const STRIPE_LINKS = {
-      foundation: "https://buy.stripe.com/28EdR95M40E4b6m2cdfYY0c",
-      structure: "https://buy.stripe.com/4gM00j60872sfnC8ABfYY0b",
-      scale: "https://buy.stripe.com/7sYdR95M4cmM8Ye5opfYY0a"
-    };
+  <!-- CLASSIFICATION -->
+  <div class="card">
+    <h2>Classification</h2>
+    <p id="classification"></p>
+  </div>
 
-    function text(id, value) {
-      const el = document.getElementById(id);
-      if (el && value !== undefined && value !== null && value !== "") {
-        el.textContent = value;
-      }
-    }
+  <!-- DIAGNOSIS -->
+  <div class="card">
+    <h2>Structural Diagnosis</h2>
+    <p id="diagnosis"></p>
+  </div>
 
-    function titleCase(value) {
-      if (!value) return "—";
-      return String(value)
-        .replace(/_/g, " ")
-        .replace(/\b\w/g, char => char.toUpperCase());
-    }
+  <!-- REVENUE -->
+  <div class="card">
+    <h2>Revenue Impact</h2>
+    <p id="revenue"></p>
+  </div>
 
-    function setState(id, stateText, toneClass) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.textContent = stateText;
-      el.className = `${el.classList.contains("signal-state") ? "signal-state" : "rsl-state"} ${toneClass}`;
-    }
+  <!-- INTELLIGENCE -->
+  <div class="card">
+    <h2>System Intelligence</h2>
+    <ul>
+      <li><strong>Constraint Severity:</strong> <span id="severity"></span></li>
+      <li><strong>System Stability:</strong> <span id="stability"></span></li>
+      <li><strong>Execution Risk:</strong> <span id="risk"></span></li>
+    </ul>
+  </div>
 
-    const tier = (data.selected_tier || "").toLowerCase();
-    const bottleneck = (data.biggest_bottleneck || "").toLowerCase();
+  <!-- PRIORITIES -->
+  <div class="card">
+    <h2>Execution Priorities</h2>
+    <ul id="priorities"></ul>
+  </div>
 
-    let classification = "Structure Phase — Constrained Execution State";
-    let diagnosis = "The business is currently operating in a constrained execution condition. Core functions may exist, but they are not yet sufficiently integrated into a dependable operating system. As a result, effort is being applied without enough structural reinforcement, which reduces control, weakens consistency, and limits the ability to produce reliable commercial outcomes.";
-    let revenueImpact = "Revenue is being suppressed by structural inconsistency rather than simple effort shortage. The business may be producing activity, but weak alignment across positioning, delivery, and execution control is causing leakage between opportunity creation and realised revenue. In practical terms, the system is allowing value to dissipate before it can compound.";
-    let executionPriorities = [
-      "identify the dominant structural constraint that is preventing commercial consistency",
-      "tighten operational alignment across the primary business functions responsible for acquisition, delivery, and control",
-      "establish a more stable execution baseline before attempting broader expansion or increased workload",
-      "convert current activity into a repeatable operating rhythm capable of supporting stronger revenue retention"
-    ];
+  <!-- NACE -->
+  <div class="card">
+    <h2>System Guidance</h2>
+    <p id="nace"></p>
+  </div>
 
-    let readinessState = "Limited";
-    let readinessTone = "state-amber";
-    let readinessText = "The business has movement, but its current internal structure is not yet stabilized enough to support dependable execution under pressure.";
+  <a class="cta" href="https://pbb.risingphoenixhq.com/pseq.html">
+    Proceed to Structured Execution
+  </a>
 
-    let scopeState = "Misaligned";
-    let scopeTone = "state-amber";
-    let scopeText = "The primary business components are not yet aligned tightly enough to support expansion without additional friction.";
+</div>
 
-    let loadState = "Elevated";
-    let loadTone = "state-amber";
-    let loadText = "Current effort levels are placing pressure on a structure that is not yet fully prepared to absorb complexity cleanly.";
+<script>
+const data = JSON.parse(localStorage.getItem("pbb_full") || "{}");
 
-    let constraintSeverityState = "Moderate";
-    let constraintSeverityTone = "state-amber";
-    let constraintSeverityText = "The dominant constraint is materially affecting performance, but it appears identifiable and correctable through structured intervention.";
+// ======================
+// PRS GENERATION (TEMP)
+// ======================
+let score = 60;
 
-    let systemStabilityState = "Variable";
-    let systemStabilityTone = "state-amber";
-    let systemStabilityText = "The business is capable of movement, but results are not yet being produced through a sufficiently stable internal system.";
+if (data.biggest_bottleneck === "sales") score = 61;
+if (data.biggest_bottleneck === "operations") score = 55;
+if (data.biggest_bottleneck === "clarity") score = 58;
 
-    let executionRiskState = "Managed Risk";
-    let executionRiskTone = "state-amber";
-    let executionRiskText = "Continued execution is possible, but without structural correction the current operating pattern is likely to preserve inefficiency.";
+let band = "amber";
+let bandText = "Developing";
 
-    if (bottleneck === "sales") {
-      classification = "Sales Phase — Conversion Constraint State";
-      diagnosis = "The business is currently underperforming at the conversion layer. Demand activity may be present, but the commercial system is not moving prospects through a controlled path from interest to commitment. This usually indicates weakness in offer positioning, sales sequencing, objection handling, close architecture, or the handoff logic between marketing activity and revenue capture. The result is not a lack of effort, but a failure to convert commercial motion into dependable outcomes.";
-      revenueImpact = "Revenue is being constrained by conversion inefficiency rather than pure lead scarcity. Attention may be entering the system, but it is not being translated into cash flow at the rate required for predictable growth. This creates hidden loss in the form of under-converted demand, slower close velocity, unstable cash generation, and a weaker return on acquisition effort.";
-      executionPriorities = [
-        "stabilise and standardise the end-to-end conversion architecture across inquiry, qualification, offer presentation, and close",
-        "strengthen offer positioning so the value case becomes more decisive at key buyer decision points",
-        "remove structural friction across the buyer progression path, especially where interest currently stalls before commitment",
-        "synchronise demand generation with closing capacity so revenue performance reflects actual commercial input"
-      ];
+if (score < 50) { band="red"; bandText="High Risk"; }
+if (score > 75) { band="green"; bandText="Strong"; }
 
-      readinessState = "Conditional";
-      readinessTone = "state-amber";
-      readinessText = "Commercial movement exists, but the conversion layer is not yet strong enough to support efficient scaling with confidence.";
+document.getElementById("prs-score").textContent = score;
+document.getElementById("score-band").textContent = bandText;
+document.getElementById("score-band").className = "band " + band;
 
-      scopeState = "Defined";
-      scopeTone = "state-green";
-      scopeText = "The dominant weakness is commercially identifiable and can be addressed through focused sales-side correction.";
+document.getElementById("score-meaning").textContent =
+  "Score reflects operational readiness and execution stability.";
 
-      loadState = "Elevated";
-      loadTone = "state-amber";
-      loadText = "Revenue pressure remains elevated because acquisition effort is outpacing the system’s ability to convert cleanly.";
+// ======================
+// BRIDGE LOGIC (EXISTING)
+// ======================
 
-      constraintSeverityState = "High";
-      constraintSeverityTone = "state-red";
-      constraintSeverityText = "The core revenue engine is being materially weakened because interest is not reliably progressing into committed business.";
+let classification = "";
+let diagnosis = "";
+let revenue = "";
+let priorities = [];
 
-      systemStabilityState = "Unstable";
-      systemStabilityTone = "state-red";
-      systemStabilityText = "Commercial outcomes are too dependent on variable execution rather than a consistently performing conversion system.";
+if (data.biggest_bottleneck === "sales") {
+  classification = "Sales Constraint";
+  diagnosis = "Conversion system is unstable and misaligned.";
+  revenue = "Revenue suppressed due to conversion inefficiency.";
+  priorities = [
+    "stabilise conversion architecture",
+    "refine offer positioning",
+    "remove friction in buyer journey"
+  ];
+}
 
-      executionRiskState = "High Risk";
-      executionRiskTone = "state-red";
-      executionRiskText = "Without correction, the business is likely to keep spending effort to generate demand that fails to convert at the required rate.";
-    } else if (bottleneck === "operations") {
-      classification = "Operations Phase — Internal Strain State";
-      diagnosis = "The business is currently experiencing internal operational strain. This means commercial or service activity may exist, but the underlying execution environment is not sufficiently organised to support dependable delivery, coordination, or workflow control. Bottlenecks are likely forming inside the business rather than at the market edge, which reduces speed, creates internal drag, and weakens management visibility.";
-      revenueImpact = "Revenue is being constrained by internal execution inefficiency. Even where demand or opportunity exists, the business is losing value through workflow friction, inconsistent handoffs, slower delivery cycles, and reduced operational capacity. In effect, the system is not yet built to monetise its activity as efficiently as it should.";
-      executionPriorities = [
-        "restore operational clarity across the core workflows that control delivery, coordination, and task ownership",
-        "standardise execution procedures and control points so performance is not dependent on memory, improvisation, or reactive correction",
-        "reduce process fragmentation across fulfilment, internal communication, and day-to-day operational movement",
-        "establish a more repeatable operating rhythm capable of handling increased volume without accumulating internal strain"
-      ];
+// ======================
+// INTELLIGENCE LAYER
+// ======================
 
-      readinessState = "Limited";
-      readinessTone = "state-amber";
-      readinessText = "Operational infrastructure is not yet stable enough to absorb more activity without compounding friction.";
+let severity = "Moderate";
+let stability = "Unstable";
+let risk = "Elevated";
 
-      scopeState = "Defined";
-      scopeTone = "state-green";
-      scopeText = "The primary weakness is internal and operational, which makes the correction path more structurally knowable.";
+document.getElementById("classification").textContent = classification;
+document.getElementById("diagnosis").textContent = diagnosis;
+document.getElementById("revenue").textContent = revenue;
 
-      loadState = "High";
-      loadTone = "state-red";
-      loadText = "Current structural load is exceeding workflow capacity and is increasing execution drag across the business.";
+document.getElementById("severity").textContent = severity;
+document.getElementById("stability").textContent = stability;
+document.getElementById("risk").textContent = risk;
 
-      constraintSeverityState = "High";
-      constraintSeverityTone = "state-red";
-      constraintSeverityText = "The dominant issue is materially degrading execution consistency and limiting the business’s internal ability to support growth.";
+// priorities
+document.getElementById("priorities").innerHTML =
+  priorities.map(p => `<li>${p}</li>`).join("");
 
-      systemStabilityState = "Fragile";
-      systemStabilityTone = "state-red";
-      systemStabilityText = "The business is functioning, but the internal system is not yet stable enough to maintain performance under sustained pressure.";
+// ======================
+// NACE GUIDANCE
+// ======================
 
-      executionRiskState = "High Risk";
-      executionRiskTone = "state-red";
-      executionRiskText = "Continuing to add volume without operational restructuring is likely to intensify breakdown points and reduce reliability.";
-    } else if (bottleneck === "fulfillment") {
-      classification = "Fulfilment Phase — Delivery Weakness State";
-      diagnosis = "The business is currently experiencing a fulfilment-side weakness. The commercial promise being made upstream is not yet matched by a delivery system strong enough to support consistent downstream execution. This creates tension between what is sold and what is reliably fulfilled, which tends to weaken trust, retention, and long-term client value.";
-      revenueImpact = "Revenue is being constrained not only at the point of sale, but after the sale through delivery inconsistency and weaker retention conditions. When fulfilment is unstable, the business loses more than immediate efficiency. It also loses repeatability, client confidence, referral strength, and the ability to compound value from each acquired customer.";
-      executionPriorities = [
-        "strengthen fulfilment consistency across the delivery chain so commercial promise and client experience become more tightly aligned",
-        "repair weak handoffs, service inconsistencies, and post-sale friction that are currently degrading trust and retention",
-        "build stronger operational controls inside delivery so fulfilment quality is less dependent on improvised execution",
-        "improve the downstream client experience to support retention, continuity, and stronger revenue durability over time"
-      ];
+document.getElementById("nace").textContent =
+  "Execution from this point determines progression. System stability must be established before advancement is permitted.";
 
-      readinessState = "Conditional";
-      readinessTone = "state-amber";
-      readinessText = "Commercial activity can continue, but fulfilment architecture must be strengthened before scale can be supported safely.";
+</script>
 
-      scopeState = "Defined";
-      scopeTone = "state-green";
-      scopeText = "The dominant weakness is clearly located in post-sale execution and delivery reliability.";
-
-      loadState = "Elevated";
-      loadTone = "state-amber";
-      loadText = "Delivery strain is increasing because fulfilment capacity and control are not keeping pace with execution demand.";
-
-      constraintSeverityState = "High";
-      constraintSeverityTone = "state-red";
-      constraintSeverityText = "The constraint is materially weakening trust, retention, and the business’s ability to compound revenue beyond the initial sale.";
-
-      systemStabilityState = "Variable";
-      systemStabilityTone = "state-amber";
-      systemStabilityText = "The business can produce results, but delivery stability is not yet strong enough to protect consistency at higher volume.";
-
-      executionRiskState = "Elevated Risk";
-      executionRiskTone = "state-amber";
-      executionRiskText = "Without fulfilment correction, additional growth may amplify client dissatisfaction and downstream performance loss.";
-    } else if (bottleneck === "clarity") {
-      classification = "Positioning Phase — Clarity Deficit State";
-      diagnosis = "The business is currently operating with a clarity deficit across positioning, offer articulation, and commercial direction. This means the value being created may be real, but it is not yet being translated into a sufficiently clear market narrative. When this occurs, buyer understanding weakens, decision confidence drops, and demand is harder to capture with efficiency.";
-      revenueImpact = "Revenue is being constrained by imprecise value translation. The business may have a workable service or offer, but unclear positioning is causing leakage before conversion even begins. This reduces lead quality, weakens buyer confidence, lengthens decision cycles, and lowers the effectiveness of both marketing and sales activity.";
-      executionPriorities = [
-        "clarify offer architecture so the business communicates a sharper and more commercially decisive value proposition",
-        "improve message precision across all demand-facing surfaces so the market can understand what is being offered and why it matters",
-        "align the primary business objective with a cleaner growth path that reduces strategic ambiguity",
-        "remove confusion from the buyer decision environment so attention can convert into stronger commercial movement"
-      ];
-
-      readinessState = "Conditional";
-      readinessTone = "state-amber";
-      readinessText = "The business may be active, but strategic clarity is not yet strong enough to support efficient growth.";
-
-      scopeState = "Unclear";
-      scopeTone = "state-red";
-      scopeText = "Positioning and offer scope require clarification before the system can operate with sufficient commercial precision.";
-
-      loadState = "Elevated";
-      loadTone = "state-amber";
-      loadText = "Strategic ambiguity is increasing friction across acquisition, decision-making, and broader execution.";
-
-      constraintSeverityState = "Moderate";
-      constraintSeverityTone = "state-amber";
-      constraintSeverityText = "The constraint is meaningful because it affects the full revenue path, but it is often correctable through clearer strategic positioning.";
-
-      systemStabilityState = "Variable";
-      systemStabilityTone = "state-amber";
-      systemStabilityText = "The business has underlying potential, but market-facing communication is not yet stable enough to support efficient performance.";
-
-      executionRiskState = "Managed Risk";
-      executionRiskTone = "state-amber";
-      executionRiskText = "The business can continue to move, but ongoing ambiguity will keep reducing conversion efficiency until clarity improves.";
-    }
-
-    text("position-classification", classification);
-    text("diagnosis", diagnosis);
-    text("revenue-impact", revenueImpact);
-
-    setState("constraint-severity-state", constraintSeverityState, constraintSeverityTone);
-    setState("system-stability-state", systemStabilityState, systemStabilityTone);
-    setState("execution-risk-state", executionRiskState, executionRiskTone);
-
-    text("constraint-severity-text", constraintSeverityText);
-    text("system-stability-text", systemStabilityText);
-    text("execution-risk-text", executionRiskText);
-
-    setState("readiness-state", readinessState, readinessTone);
-    setState("scope-state", scopeState, scopeTone);
-    setState("load-state", loadState, loadTone);
-
-    text("readiness-text", readinessText);
-    text("scope-text", scopeText);
-    text("load-text", loadText);
-
-    text("business-name", data.business_name || "—");
-    text("selected-tier", titleCase(data.selected_tier || "—"));
-    text("primary-objective", data.notes || data.primary_objective || "—");
-    text("bottleneck-display", titleCase(data.biggest_bottleneck || "—"));
-
-    const prioritiesEl = document.getElementById("execution-priorities");
-    if (prioritiesEl && executionPriorities.length) {
-      prioritiesEl.innerHTML = executionPriorities
-        .map(item => `<li>${item}</li>`)
-        .join("");
-    }
-
-    let recommendedPath = "You are positioned for the Phoenix Business Builder.";
-    let ctaLabel = "Proceed to Structured Execution";
-    let ctaHref = STRIPE_LINKS.structure;
-    let ctaNote = "This pathway is intended to align structure, improve execution control, and support more repeatable growth conditions.";
-
-    if (tier === "foundation") {
-      recommendedPath = "You are positioned for the Phoenix Business Builder — Foundation Tier.";
-      ctaLabel = "Proceed to Foundation Execution";
-      ctaHref = STRIPE_LINKS.foundation;
-      ctaNote = "This pathway is intended to establish baseline control, improve clarity, and create a stronger operational footing.";
-    } else if (tier === "structure") {
-      recommendedPath = "You are positioned for the Phoenix Business Builder — Structure Tier.";
-      ctaLabel = "Proceed to Structured Execution";
-      ctaHref = STRIPE_LINKS.structure;
-      ctaNote = "This pathway is intended to correct structural inefficiency, improve control, and support more reliable execution conditions.";
-    } else if (tier === "scale") {
-      recommendedPath = "You are positioned for the Phoenix Business Builder — Scale Tier.";
-      ctaLabel = "Proceed to Scale Execution";
-      ctaHref = STRIPE_LINKS.scale;
-      ctaNote = "This pathway is intended to strengthen scale readiness, reinforce control systems, and support higher-volume execution under better alignment.";
-    }
-
-    text("recommended-path", recommendedPath);
-    text("cta-note", ctaNote);
-
-    const ctaLink = document.getElementById("cta-link");
-    if (ctaLink) {
-      ctaLink.textContent = ctaLabel;
-      ctaLink.href = ctaHref;
-    }
-  </script>
 </body>
 </html> 
