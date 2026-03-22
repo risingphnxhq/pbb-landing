@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PSEQ — Execution Layer</title>
+<style>
+body {
+  background:#0b0f14;
+  color:#f5efe6;
+  font-family:Georgia;
+  padding:30px;
+}
+.task {
+  margin-bottom:10px;
+}
+button {
+  padding:10px;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Structured Execution</h1>
+<p>Execution is required for progression.</p>
+
+<div id="tasks"></div>
+
+<button onclick="complete()">Mark Step Complete</button>
+
+<script>
+let data = JSON.parse(localStorage.getItem("pbb_full") || "{}");
+
+let tasks = [
+  "Stabilise conversion process",
+  "Align offer structure",
+  "Reduce friction in sales flow"
+];
+
+document.getElementById("tasks").innerHTML =
+  tasks.map(t => `<div class="task">⬜ ${t}</div>`).join("");
+
+let progress = 0;
+
+function complete() {
+  progress += 10;
+
+  let newScore = (data.prs_score || 60) + 5;
+
+  data.prs_score = newScore;
+
+  localStorage.setItem("pbb_full", JSON.stringify(data));
+
+  alert("Progress recorded. Score improving.");
+}
+</script>
+
+</body>
+</html> 
