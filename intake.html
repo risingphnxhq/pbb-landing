@@ -3,333 +3,570 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PBB Intake | Rising Phoenix Enterprises</title>
+  <title>Phoenix Business Builder — Intake</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
-    :root {
-      --bg: #0b0f14;
-      --panel: #121c26;
-      --line: rgba(255,255,255,0.08);
-      --text: #f5efe6;
-      --muted: rgba(245,239,230,0.72);
-      --gold: #d6b36a;
-      --danger-bg: rgba(127,29,29,0.32);
-      --danger-border: rgba(248,113,113,0.28);
-      --danger-text: #f8d0d0;
-      --success-bg: rgba(6,95,70,0.25);
-      --success-border: rgba(52,211,153,0.24);
-      --success-text: #d1fae5;
-      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+    :root{
+      --bg:#07090d;
+      --bg-soft:#0c1016;
+      --panel:#101722;
+      --panel-2:#131c29;
+      --line:rgba(255,255,255,0.08);
+      --line-soft:rgba(255,255,255,0.05);
+      --text:#f4efe6;
+      --muted:rgba(244,239,230,0.74);
+      --muted-2:rgba(244,239,230,0.52);
+      --gold:#d3b06b;
+      --gold-deep:#b8944e;
+      --gold-soft:rgba(211,176,107,0.14);
+      --blue-soft:rgba(78,129,255,0.10);
+      --shadow:0 24px 70px rgba(0,0,0,0.34);
+      --radius:26px;
+      --radius-sm:18px;
     }
 
-    * {
-      box-sizing: border-box;
+    *{
+      box-sizing:border-box;
     }
 
-    html, body {
-      margin: 0;
-      padding: 0;
+    html, body{
+      margin:0;
+      min-height:100%;
       background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.04), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(68,115,255,0.08), transparent 24%),
-        linear-gradient(180deg, #0a0e13 0%, #0b0f14 100%);
-      color: var(--text);
-      font-family: Georgia, "Times New Roman", serif;
+        radial-gradient(circle at top center, rgba(211,176,107,0.06), transparent 24%),
+        radial-gradient(circle at bottom right, rgba(78,129,255,0.08), transparent 26%),
+        linear-gradient(180deg, #07090d 0%, #0a0f16 100%);
+      color:var(--text);
+      font-family:"Inter", Arial, sans-serif;
     }
 
-    body {
-      padding: 40px 16px;
+    body{
+      position:relative;
+      overflow-x:hidden;
     }
 
-    .wrap {
-      max-width: 920px;
-      margin: 0 auto;
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size:120px 120px;
+      mask-image:linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.12));
+      pointer-events:none;
     }
 
-    .panel {
-      background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.015));
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 34px 28px 26px;
-      box-shadow: var(--shadow);
+    .wrap{
+      width:min(980px, calc(100% - 28px));
+      margin:42px auto 52px;
+      position:relative;
+      z-index:1;
     }
 
-    .eyebrow {
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
+    .shell{
+      background:linear-gradient(180deg, rgba(255,255,255,0.028), rgba(255,255,255,0.015));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(10px);
     }
 
-    h1 {
-      margin: 0 0 10px;
-      font-size: clamp(34px, 5vw, 56px);
-      line-height: 1;
-      font-weight: 600;
-      letter-spacing: -0.03em;
+    .header{
+      padding:28px 30px 24px;
+      border-bottom:1px solid var(--line-soft);
     }
 
-    .subhead {
-      margin: 0 0 28px;
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.65;
-      max-width: 760px;
+    .eyebrow{
+      margin:0 0 10px;
+      font-size:12px;
+      letter-spacing:0.22em;
+      text-transform:uppercase;
+      color:var(--muted-2);
     }
 
-    .field {
-      margin-bottom: 20px;
+    h1{
+      margin:0;
+      font-family:"Cinzel", serif;
+      font-size:clamp(2.45rem, 5vw, 4.3rem);
+      line-height:0.98;
+      letter-spacing:-0.03em;
+      font-weight:600;
     }
 
-    label {
-      display: block;
-      margin-bottom: 10px;
-      color: var(--text);
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    .subhead{
+      margin:16px 0 0;
+      max-width:760px;
+      font-size:1.08rem;
+      line-height:1.72;
+      color:var(--muted);
     }
 
-    input,
-    select,
-    textarea {
-      width: 100%;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 18px 18px;
-      font-size: 17px;
-      font-family: Georgia, "Times New Roman", serif;
-      outline: none;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    .content{
+      padding:28px 30px 30px;
+      display:grid;
+      gap:22px;
+    }
+
+    .panel{
+      background:rgba(255,255,255,0.025);
+      border:1px solid var(--line);
+      border-radius:var(--radius-sm);
+      padding:22px 22px 20px;
+    }
+
+    .panel-label{
+      margin:0 0 14px;
+      font-size:12px;
+      letter-spacing:0.20em;
+      text-transform:uppercase;
+      color:var(--muted-2);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .field.full{
+      grid-column:1 / -1;
+    }
+
+    label{
+      font-size:12px;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color:var(--text);
+      font-weight:600;
+    }
+
+    input, select, textarea{
+      width:100%;
+      appearance:none;
+      border:1px solid rgba(211,176,107,0.18);
+      border-radius:16px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      color:var(--text);
+      padding:16px 16px;
+      font-size:1rem;
+      line-height:1.4;
+      outline:none;
+      transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    input::placeholder,
+    textarea::placeholder{
+      color:rgba(244,239,230,0.42);
     }
 
     input:focus,
     select:focus,
-    textarea:focus {
-      border-color: rgba(214,179,106,0.5);
-      box-shadow: 0 0 0 3px rgba(214,179,106,0.12);
+    textarea:focus{
+      border-color:rgba(211,176,107,0.55);
+      box-shadow:0 0 0 4px rgba(211,176,107,0.10);
+      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
     }
 
-    textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
-
-    select {
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
+    select{
+      cursor:pointer;
       background-image:
-        linear-gradient(45deg, transparent 50%, var(--text) 50%),
-        linear-gradient(135deg, var(--text) 50%, transparent 50%);
+        linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+        linear-gradient(135deg, var(--muted) 50%, transparent 50%);
       background-position:
         calc(100% - 24px) calc(50% - 3px),
         calc(100% - 18px) calc(50% - 3px);
-      background-size: 6px 6px, 6px 6px;
-      background-repeat: no-repeat;
-      padding-right: 46px;
+      background-size:6px 6px, 6px 6px;
+      background-repeat:no-repeat;
+      padding-right:42px;
     }
 
-    option {
-      color: #111;
+    textarea{
+      min-height:150px;
+      resize:vertical;
     }
 
-    .submit-btn {
-      width: 100%;
-      min-height: 62px;
-      border: 1px solid rgba(214,179,106,0.28);
-      border-radius: 14px;
-      background: linear-gradient(180deg, #f0dfb2 0%, #d6b36a 100%);
-      color: #1b1b1b;
-      font-size: 18px;
-      font-weight: 700;
-      font-family: Georgia, "Times New Roman", serif;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
-      box-shadow: 0 14px 34px rgba(214,179,106,0.18);
+    .summary{
+      display:grid;
+      grid-template-columns:1.2fr 0.8fr;
+      gap:18px;
     }
 
-    .submit-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 38px rgba(214,179,106,0.24);
+    .summary-box{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      background:rgba(255,255,255,0.02);
     }
 
-    .submit-btn:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: 0 10px 24px rgba(214,179,106,0.12);
+    .summary-title{
+      margin:0 0 12px;
+      font-family:"Cinzel", serif;
+      font-size:1.1rem;
+      letter-spacing:0.03em;
     }
 
-    .status {
-      display: none;
-      margin-top: 18px;
-      padding: 16px 18px;
-      border-radius: 14px;
-      font-size: 16px;
-      line-height: 1.6;
-      border: 1px solid transparent;
+    .summary-copy{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+      font-size:0.98rem;
     }
 
-    .status.error {
-      display: block;
-      background: var(--danger-bg);
-      border-color: var(--danger-border);
-      color: var(--danger-text);
+    .summary-copy strong{
+      color:var(--text);
+      font-weight:600;
     }
 
-    .status.success {
-      display: block;
-      background: var(--success-bg);
-      border-color: var(--success-border);
-      color: var(--success-text);
+    .signal-list{
+      display:grid;
+      gap:10px;
+      margin-top:14px;
     }
 
-    .footnote {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.65;
+    .signal{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px 13px;
+      background:rgba(255,255,255,0.015);
+      color:var(--muted);
+      line-height:1.55;
+      font-size:0.95rem;
     }
 
-    @media (max-width: 640px) {
-      .panel {
-        padding: 24px 18px 22px;
+    .signal strong{
+      color:var(--text);
+    }
+
+    .actions{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-top:6px;
+      flex-wrap:wrap;
+    }
+
+    .micro{
+      max-width:620px;
+      color:var(--muted-2);
+      font-size:0.93rem;
+      line-height:1.65;
+    }
+
+    .cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:260px;
+      min-height:60px;
+      padding:15px 26px;
+      border-radius:16px;
+      border:1px solid rgba(0,0,0,0.22);
+      background:linear-gradient(180deg, #f0ddb0 0%, #d5b16f 100%);
+      color:#1b1711;
+      font-family:"Cinzel", serif;
+      font-size:1rem;
+      font-weight:600;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      cursor:pointer;
+      text-decoration:none;
+      transition:transform .18s ease, filter .18s ease;
+    }
+
+    .cta:hover{
+      transform:translateY(-1px);
+      filter:brightness(1.02);
+    }
+
+    .footer-note{
+      padding:0 30px 28px;
+      color:var(--muted-2);
+      font-size:0.86rem;
+      line-height:1.7;
+    }
+
+    .hidden{
+      display:none !important;
+    }
+
+    @media (max-width: 860px){
+      .summary,
+      .grid{
+        grid-template-columns:1fr;
       }
 
-      .subhead {
-        font-size: 17px;
+      .wrap{
+        width:min(100% - 18px, 980px);
+        margin:18px auto 28px;
       }
 
-      input,
-      select,
-      textarea {
-        font-size: 16px;
+      .header{
+        padding:22px 18px 20px;
+      }
+
+      .content{
+        padding:18px;
+      }
+
+      .footer-note{
+        padding:0 18px 22px;
+      }
+
+      .cta{
+        width:100%;
       }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <section class="panel">
-      <div class="eyebrow">Phoenix Business System</div>
-      <h1>Business Intake</h1>
-      <p class="subhead">
-        Your payment has been confirmed. Complete this intake so Rising Phoenix can place you into the correct execution path.
-      </p>
+    <div class="shell">
+      <div class="header">
+        <p class="eyebrow">Phoenix Business System</p>
+        <h1>Business Intake</h1>
+        <p class="subhead">
+          Your payment has been confirmed. Complete this intake so Rising Phoenix can place you into the correct execution path with structured continuity from diagnosis into build.
+        </p>
+      </div>
 
-      <form id="intakeForm">
-        <div class="field">
-          <label for="full_name">Full Name</label>
-          <input id="full_name" name="full_name" type="text" required />
-        </div>
+      <div class="content">
+        <section class="panel">
+          <p class="panel-label">Structured Intake</p>
 
-        <div class="field">
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" required />
-        </div>
+          <form id="pbb-intake-form" novalidate>
+            <div class="grid">
+              <div class="field">
+                <label for="full_name">Full Name</label>
+                <input id="full_name" name="full_name" type="text" placeholder="Enter full name" autocomplete="name" />
+              </div>
 
-        <div class="field">
-          <label for="business_name">Business Name</label>
-          <input id="business_name" name="business_name" type="text" />
-        </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="Enter email address" autocomplete="email" />
+              </div>
 
-        <div class="field">
-          <label for="selected_tier">Selected Tier</label>
-          <select id="selected_tier" name="selected_tier" required>
-            <option value="">Select tier</option>
-            <option value="foundation">Foundation</option>
-            <option value="structure">Structure</option>
-            <option value="scale">Scale</option>
-          </select>
-        </div>
+              <div class="field full">
+                <label for="business_name">Business Name</label>
+                <input id="business_name" name="business_name" type="text" placeholder="Enter business name" autocomplete="organization" />
+              </div>
 
-        <div class="field">
-          <label for="notes">Primary Objective</label>
-          <textarea id="notes" name="notes" placeholder="State your current objective." required></textarea>
-        </div>
+              <div class="field">
+                <label for="selected_tier">Selected Tier</label>
+                <select id="selected_tier" name="selected_tier">
+                  <option value="">Select tier</option>
+                  <option value="foundation">Foundation</option>
+                  <option value="structure">Structure</option>
+                  <option value="scale">Scale</option>
+                </select>
+              </div>
 
-        <button id="submitBtn" class="submit-btn" type="submit">Submit Intake</button>
+              <div class="field">
+                <label for="priority_track">Priority Track</label>
+                <select id="priority_track" name="priority_track">
+                  <option value="">Select track</option>
+                  <option value="stabilization">Stabilization</option>
+                  <option value="correction">Correction</option>
+                  <option value="optimization">Optimization</option>
+                </select>
+              </div>
 
-        <div id="statusBox" class="status"></div>
+              <div class="field full">
+                <label for="primary_objective">Primary Objective</label>
+                <textarea id="primary_objective" name="primary_objective" placeholder="State your current objective."></textarea>
+              </div>
+            </div>
 
-        <div class="footnote">
-          After submission, your intake is captured and prepared for tier-based routing.
-        </div>
-      </form>
-    </section>
+            <div class="summary hidden" id="continuity-block">
+              <div class="summary-box">
+                <h3 class="summary-title">Continuity from PBRS</h3>
+                <p class="summary-copy" id="continuity-copy">
+                  Your PBRS diagnostic has been carried into this intake. Builder now converts diagnostic truth into a controlled correction path.
+                </p>
+
+                <div class="signal-list">
+                  <div class="signal" id="signal-score"><strong>Phoenix Rating Score:</strong> —</div>
+                  <div class="signal" id="signal-band"><strong>Score Band:</strong> —</div>
+                  <div class="signal" id="signal-bottleneck"><strong>Primary Bottleneck:</strong> —</div>
+                  <div class="signal" id="signal-classification"><strong>Classification:</strong> —</div>
+                </div>
+              </div>
+
+              <div class="summary-box">
+                <h3 class="summary-title">Builder Position</h3>
+                <p class="summary-copy" id="builder-position-copy">
+                  This intake confirms operator entry into the next execution layer. After submission, progression moves into the Precision Business Probe.
+                </p>
+              </div>
+            </div>
+
+            <div class="actions">
+              <div class="micro" id="micro-note">
+                After submission, your intake is captured, merged into the PBB execution object, and advanced into the Precision Business Probe for deeper operational signal collection.
+              </div>
+              <button class="cta" type="submit" id="submit-btn">Continue to Precision Probe</button>
+            </div>
+          </form>
+        </section>
+      </div>
+
+      <div class="footer-note">
+        PBB intake confirms the paid operator’s entry into the Builder correction layer. This page should never loop back to itself after submission. Successful submission advances into <strong>probe.html</strong>.
+      </div>
+    </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  const SUPABASE_URL = "https://oyjmpbuxvfxusmbouldi.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95am1wYnV4dmZ4dXNtYm91bGRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk0NDkxNTcsImV4cCI6MjA4NTAyNTE1N30.S4P98vRR8AS7vsg5W-Dxg_fEtVoSlKscMOWEsigo5Mk ";
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  <script>
+    function clean(value) {
+      return String(value || "").trim();
+    }
 
-  const form = document.getElementById("intakeForm");
-  const submitBtn = document.getElementById("submitBtn");
-  const statusBox = document.getElementById("statusBox");
+    function titleCase(value) {
+      if (!value) return "—";
+      return String(value)
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, function(char) { return char.toUpperCase(); });
+    }
 
-  function showStatus(type, message) {
-    statusBox.className = `status ${type}`;
-    statusBox.textContent = message;
-  }
-  
-    form.addEventListener("submit", async function (e) {
+    function setValue(id, value) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (value !== undefined && value !== null && value !== "") {
+        el.value = value;
+      }
+    }
+
+    function setText(id, value) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.innerHTML = value;
+    }
+
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        full_name: clean(params.get("full_name")),
+        email: clean(params.get("email")),
+        business_name: clean(params.get("business_name")),
+        selected_tier: clean(params.get("selected_tier")),
+        primary_objective: clean(params.get("primary_objective"))
+      };
+    }
+
+    function chooseTier(existing) {
+      const explicit = clean(existing.selected_tier || existing.recommended_tier || "");
+      if (explicit) return explicit.toLowerCase();
+
+      const score = Number(existing.prs_score || existing.score_final || 0);
+
+      if (score >= 85) return "scale";
+      if (score >= 60) return "structure";
+      return "foundation";
+    }
+
+    const query = getQueryParams();
+    const pbbFull = JSON.parse(localStorage.getItem("pbb_full") || "{}");
+    const pbrsIntake = JSON.parse(localStorage.getItem("pbrs_intake") || "{}");
+
+    const mergedSeed = {
+      ...pbrsIntake,
+      ...pbbFull,
+      ...query
+    };
+
+    const selectedTier = chooseTier(mergedSeed);
+
+    setValue("full_name", mergedSeed.full_name || mergedSeed.customer_name || "");
+    setValue("email", mergedSeed.email || mergedSeed.customer_email || "");
+    setValue("business_name", mergedSeed.business_name || mergedSeed.legal_name || "");
+    setValue("selected_tier", selectedTier);
+    setValue("primary_objective", mergedSeed.primary_objective || mergedSeed.notes || "");
+
+    const trackMap = {
+      foundation: "stabilization",
+      structure: "correction",
+      scale: "optimization"
+    };
+    setValue("priority_track", trackMap[selectedTier] || "");
+
+    const hasContinuityData =
+      mergedSeed.prs_score ||
+      mergedSeed.score_final ||
+      mergedSeed.biggest_bottleneck ||
+      mergedSeed.classification;
+
+    if (hasContinuityData) {
+      document.getElementById("continuity-block").classList.remove("hidden");
+
+      setText(
+        "continuity-copy",
+        "Your PBRS diagnostic has been carried into this intake. <strong>Builder now converts diagnostic truth into a controlled correction path.</strong>"
+      );
+
+      setText(
+        "signal-score",
+        "<strong>Phoenix Rating Score:</strong> " + clean(mergedSeed.prs_score || mergedSeed.score_final || "—")
+      );
+
+      setText(
+        "signal-band",
+        "<strong>Score Band:</strong> " + titleCase(mergedSeed.score_band || "—")
+      );
+
+      setText(
+        "signal-bottleneck",
+        "<strong>Primary Bottleneck:</strong> " + titleCase(mergedSeed.biggest_bottleneck || "—")
+      );
+
+      setText(
+        "signal-classification",
+        "<strong>Classification:</strong> " + clean(mergedSeed.classification || "—")
+      );
+    }
+
+    const form = document.getElementById("pbb-intake-form");
+
+    form.addEventListener("submit", function(e) {
       e.preventDefault();
 
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Submitting...";
-      statusBox.className = "status";
-      statusBox.textContent = "";
-
-      const payload = {
-        full_name: document.getElementById("full_name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        business_name: document.getElementById("business_name").value.trim() || null,
-        selected_tier: document.getElementById("selected_tier").value,
-        notes: document.getElementById("notes").value.trim() || null,
-        intake_status: "received",
-        routing_status: "pending",
-        source: "pbb_intake"
+      const intakeData = {
+        full_name: clean(document.getElementById("full_name").value),
+        email: clean(document.getElementById("email").value),
+        business_name: clean(document.getElementById("business_name").value),
+        selected_tier: clean(document.getElementById("selected_tier").value).toLowerCase(),
+        priority_track: clean(document.getElementById("priority_track").value).toLowerCase(),
+        primary_objective: clean(document.getElementById("primary_objective").value)
       };
 
-      try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/pbb_intakes`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-            "Prefer": "return=minimal"
-          },
-          body: JSON.stringify(payload)
-        });
+      const existing = JSON.parse(localStorage.getItem("pbb_full") || "{}");
 
-        const rawText = await response.text();
+      const merged = {
+        ...existing,
+        ...pbrsIntake,
+        ...query,
+        ...intakeData,
+        notes: intakeData.primary_objective,
+        current_stage: "pbb_intake",
+        next_stage: "pbb_probe",
+        execution_entry_confirmed: true
+      };
 
-        if (!response.ok) {
-          console.error("Insert failed:", response.status, rawText);
-          throw new Error(rawText || "Insert failed");
-        }
+      localStorage.setItem("pbb_intake", JSON.stringify(intakeData));
+      localStorage.setItem("pbb_full", JSON.stringify(merged));
 
-        localStorage.setItem("pbb_intake", JSON.stringify(payload));
-        window.location.href = "/probe.html";
-        return;
-
-      } catch (error) {
-        console.error(error);
-        showStatus(
-          "error",
-          "Submission failed. Check your Supabase URL, publishable key, table setup, and RLS policy, then try again."
-        );
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Submit Intake";
-      }
+      window.location.href = "https://pbb.risingphoenixhq.com/probe.html";
     });
   </script>
 </body>
