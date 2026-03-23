@@ -1,84 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Phoenix Business System — Diagnostic Output</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phoenix Business Builder — Business Assessment</title>
 
 <style>
 :root {
-  --bg: #0b0f14;
-  --panel: rgba(255,255,255,0.04);
-  --border: rgba(255,255,255,0.08);
-  --text: #f5efe6;
-  --sub: rgba(245,239,230,0.7);
-  --gold: #c7a15b;
-  --red: #aa4848;
-  --amber: #b8860b;
-  --green: #398c59;
+  --bg:#0b0f14;
+  --panel:#101722;
+  --border:rgba(255,255,255,0.08);
+  --text:#f5efe6;
+  --muted:rgba(245,239,230,0.75);
+  --gold:#c7a15b;
 }
 
 body {
   margin:0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Georgia, serif;
+  background:var(--bg);
+  color:var(--text);
+  font-family: Inter, system-ui;
 }
 
-.wrap {
-  max-width:1100px;
-  margin:40px auto;
-  padding:20px;
+.container {
+  max-width:1000px;
+  margin:auto;
+  padding:40px 20px;
 }
 
-.card {
-  background: var(--panel);
+h1 {
+  font-size:40px;
+  margin-bottom:10px;
+}
+
+h2 {
+  margin-top:40px;
+  font-size:22px;
+}
+
+p {
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.panel {
+  background:var(--panel);
   border:1px solid var(--border);
-  border-radius:20px;
-  padding:24px;
-  margin-bottom:20px;
-}
-
-h1,h2 {
-  margin:0 0 10px;
-}
-
-.small {
-  color: var(--sub);
-  font-size:14px;
-}
-
-.score-box {
-  display:flex;
-  gap:20px;
-  align-items:center;
+  border-radius:10px;
+  padding:20px;
+  margin-top:20px;
 }
 
 .score {
-  font-size:48px;
+  font-size:46px;
   color:var(--gold);
 }
 
-.band {
-  padding:6px 12px;
-  border-radius:999px;
+ul {
+  padding-left:20px;
 }
 
-.red { background: rgba(170,72,72,0.2); }
-.amber { background: rgba(184,134,11,0.2); }
-.green { background: rgba(57,140,89,0.2); }
+li {
+  margin-bottom:8px;
+}
 
-ul { line-height:1.7; }
-
-.cta {
-  display:block;
-  margin-top:20px;
-  padding:14px;
+.button {
+  margin-top:40px;
+  background:linear-gradient(135deg,#d6b46a,#c7a15b);
+  color:black;
+  padding:16px;
   text-align:center;
-  background: linear-gradient(#ecd8a0,#cfb06d);
-  color:#000;
-  border-radius:12px;
-  text-decoration:none;
+  border-radius:8px;
+  cursor:pointer;
   font-weight:600;
 }
 </style>
@@ -86,140 +79,212 @@ ul { line-height:1.7; }
 
 <body>
 
-<div class="wrap">
+<div class="container">
 
-  <div class="card">
-    <h1>Operational Diagnostic Output</h1>
-    <p class="small">Structured assessment of business condition and progression readiness.</p>
-  </div>
+<h1>Business Assessment</h1>
+<p>This assessment reflects how your business is currently operating and what is limiting its ability to grow consistently.</p>
 
-  <!-- PRS SCORE -->
-  <div class="card">
-    <h2>Phoenix Rating Score (PRS)</h2>
-    <div class="score-box">
-      <div class="score" id="prs-score">--</div>
-      <div class="band" id="score-band">--</div>
-    </div>
-    <p class="small" id="score-meaning"></p>
-  </div>
+<!-- SCORE -->
+<div class="panel">
+  <div class="score" id="score">--</div>
+  <p id="score-text"></p>
+</div>
 
-  <!-- CLASSIFICATION -->
-  <div class="card">
-    <h2>Classification</h2>
-    <p id="classification"></p>
-  </div>
+<!-- EXECUTIVE SUMMARY -->
+<h2>Executive Summary</h2>
+<div class="panel">
+<p id="exec-summary"></p>
+</div>
 
-  <!-- DIAGNOSIS -->
-  <div class="card">
-    <h2>Structural Diagnosis</h2>
-    <p id="diagnosis"></p>
-  </div>
+<!-- PRIMARY CONSTRAINT -->
+<h2>Primary Constraint to Growth</h2>
+<div class="panel">
+<p id="primary-constraint"></p>
+</div>
 
-  <!-- REVENUE -->
-  <div class="card">
-    <h2>Revenue Impact</h2>
-    <p id="revenue"></p>
-  </div>
+<!-- SUPPORTING ISSUES -->
+<h2>Supporting Issues</h2>
+<div class="panel">
+<ul id="supporting-issues"></ul>
+</div>
 
-  <!-- INTELLIGENCE -->
-  <div class="card">
-    <h2>System Intelligence</h2>
-    <ul>
-      <li><strong>Constraint Severity:</strong> <span id="severity"></span></li>
-      <li><strong>System Stability:</strong> <span id="stability"></span></li>
-      <li><strong>Execution Risk:</strong> <span id="risk"></span></li>
-    </ul>
-  </div>
+<!-- REVENUE IMPACT -->
+<h2>Revenue Impact</h2>
+<div class="panel">
+<p id="revenue-impact"></p>
+</div>
 
-  <!-- PRIORITIES -->
-  <div class="card">
-    <h2>Execution Priorities</h2>
-    <ul id="priorities"></ul>
-  </div>
+<!-- OPERATIONAL IMPACT -->
+<h2>Operational Impact</h2>
+<div class="panel">
+<p id="operational-impact"></p>
+</div>
 
-  <!-- NACE -->
-  <div class="card">
-    <h2>System Guidance</h2>
-    <p id="nace"></p>
-  </div>
+<!-- RISK -->
+<h2>Risk Outlook</h2>
+<div class="panel">
+<p id="risk-outlook"></p>
+</div>
 
-  <a class="cta" href="https://pbb.risingphoenixhq.com/pseq.html">
-    Proceed to Structured Execution
-  </a>
+<!-- CORRECTION PRIORITIES -->
+<h2>Correction Priorities</h2>
+<div class="panel">
+<ul id="priorities"></ul>
+</div>
+
+<!-- IMMEDIATE VALUE LAYER -->
+<h2>What to Address Immediately</h2>
+<div class="panel">
+<p id="immediate-action"></p>
+<ul id="immediate-list"></ul>
+</div>
+
+<h2>What Is Likely Costing You Revenue Today</h2>
+<div class="panel">
+<ul id="loss-list"></ul>
+<p id="loss-summary"></p>
+</div>
+
+<h2>What Will Improve First</h2>
+<div class="panel">
+<ul id="improve-list"></ul>
+</div>
+
+<h2>Why This Matters Now</h2>
+<div class="panel">
+<p id="why-now"></p>
+</div>
+
+<!-- CTA -->
+<div class="button" onclick="window.location.href='probe.html'">
+Continue to Precision Business Assessment
+</div>
 
 </div>
 
 <script>
+
 const data = JSON.parse(localStorage.getItem("pbb_full") || "{}");
+const bottleneck = (data.biggest_bottleneck || "").toLowerCase();
 
-// ======================
-// PRS GENERATION (TEMP)
-// ======================
-let score = 60;
+let score = 61;
+let scoreText = "Your business is active but not yet stable enough to produce consistent and predictable growth.";
 
-if (data.biggest_bottleneck === "sales") score = 61;
-if (data.biggest_bottleneck === "operations") score = 55;
-if (data.biggest_bottleneck === "clarity") score = 58;
+let execSummary = "";
+let primaryConstraint = "";
+let revenueImpact = "";
+let operationalImpact = "";
+let risk = "";
+let whyNow = "";
 
-let band = "amber";
-let bandText = "Developing";
-
-if (score < 50) { band="red"; bandText="High Risk"; }
-if (score > 75) { band="green"; bandText="Strong"; }
-
-document.getElementById("prs-score").textContent = score;
-document.getElementById("score-band").textContent = bandText;
-document.getElementById("score-band").className = "band " + band;
-
-document.getElementById("score-meaning").textContent =
-  "Score reflects operational readiness and execution stability.";
-
-// ======================
-// BRIDGE LOGIC (EXISTING)
-// ======================
-
-let classification = "";
-let diagnosis = "";
-let revenue = "";
+let supporting = [];
 let priorities = [];
+let immediateList = [];
+let lossList = [];
+let improveList = [];
 
-if (data.biggest_bottleneck === "sales") {
-  classification = "Sales Constraint";
-  diagnosis = "Conversion system is unstable and misaligned.";
-  revenue = "Revenue suppressed due to conversion inefficiency.";
-  priorities = [
-    "stabilise conversion architecture",
-    "refine offer positioning",
-    "remove friction in buyer journey"
-  ];
+// SALES CASE
+if (bottleneck === "sales") {
+
+execSummary = "Your business is generating interest, but that interest is not converting into consistent revenue. The issue is not demand — it is how your business turns interest into paying clients.";
+
+primaryConstraint = "Your current sales approach is not consistently moving prospects from interest to purchase.";
+
+supporting = [
+"Offer positioning lacks clarity or urgency",
+"Buyer journey is not structured clearly",
+"Sales conversations are not consistently leading to decisions",
+"Prospects lose momentum before committing"
+];
+
+revenueImpact = "Revenue is being lost due to missed conversions, slow deal flow, and inconsistent closing.";
+
+operationalImpact = "Time and effort are being spent without proportional results, creating instability in performance.";
+
+risk = "Without correction, growth will remain inconsistent regardless of effort or marketing.";
+
+priorities = [
+"Improve how prospects move from interest to purchase",
+"Strengthen offer clarity",
+"Reduce friction in the buying process",
+"Establish a more consistent sales approach"
+];
+
+immediateList = [
+"Clarify what you are offering in simple terms",
+"Make it easier for prospects to say yes",
+"Ensure every interaction leads to a decision"
+];
+
+lossList = [
+"Prospects leaving without buying",
+"Time spent on non-converting leads",
+"Delayed or lost deals"
+];
+
+improveList = [
+"Higher conversion rates",
+"Faster deal flow",
+"More stable revenue"
+];
+
+whyNow = "Right now, growth is being limited by how your business converts demand into revenue, not by lack of effort.";
 }
 
-// ======================
-// INTELLIGENCE LAYER
-// ======================
+// DEFAULT
+else {
+execSummary = "Your business is currently limited by structural inconsistencies that are affecting performance.";
+primaryConstraint = "There is no clearly defined dominant constraint, which is limiting growth.";
+supporting = [
+"Lack of clarity in operations",
+"Inconsistent performance",
+"Unclear direction"
+];
+revenueImpact = "Revenue is inconsistent due to lack of structure.";
+operationalImpact = "Execution lacks consistency and reliability.";
+risk = "Growth will remain unpredictable.";
+priorities = [
+"Clarify structure",
+"Define priorities",
+"Stabilize operations"
+];
+immediateList = [
+"Identify primary issue",
+"Simplify operations",
+"Focus on one improvement area"
+];
+lossList = [
+"Wasted effort",
+"Missed opportunities"
+];
+improveList = [
+"Better clarity",
+"Improved consistency"
+];
+whyNow = "Without structure, performance will remain inconsistent.";
+}
 
-let severity = "Moderate";
-let stability = "Unstable";
-let risk = "Elevated";
+// RENDER
+document.getElementById("score").textContent = score;
+document.getElementById("score-text").textContent = scoreText;
 
-document.getElementById("classification").textContent = classification;
-document.getElementById("diagnosis").textContent = diagnosis;
-document.getElementById("revenue").textContent = revenue;
+document.getElementById("exec-summary").textContent = execSummary;
+document.getElementById("primary-constraint").textContent = primaryConstraint;
 
-document.getElementById("severity").textContent = severity;
-document.getElementById("stability").textContent = stability;
-document.getElementById("risk").textContent = risk;
+document.getElementById("revenue-impact").textContent = revenueImpact;
+document.getElementById("operational-impact").textContent = operationalImpact;
+document.getElementById("risk-outlook").textContent = risk;
+document.getElementById("why-now").textContent = whyNow;
 
-// priorities
-document.getElementById("priorities").innerHTML =
-  priorities.map(p => `<li>${p}</li>`).join("");
+function renderList(id, arr){
+  document.getElementById(id).innerHTML = arr.map(i=>`<li>${i}</li>`).join("");
+}
 
-// ======================
-// NACE GUIDANCE
-// ======================
-
-document.getElementById("nace").textContent =
-  "Execution from this point determines progression. System stability must be established before advancement is permitted.";
+renderList("supporting-issues", supporting);
+renderList("priorities", priorities);
+renderList("immediate-list", immediateList);
+renderList("loss-list", lossList);
+renderList("improve-list", improveList);
 
 </script>
 
