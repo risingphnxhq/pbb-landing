@@ -4,10 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Phoenix Business Builder — Intake</title>
-  <meta
-    name="description"
-    content="Phoenix Business Builder intake layer for structured operator entry, continuity from PBRS, and progression into the Precision Business Probe."
-  />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,6 +53,8 @@
 
     button{
       font:inherit;
+      border:none;
+      background:none;
     }
 
     .page{
@@ -222,7 +220,7 @@
       font-size:15px;
       line-height:1.68;
       color:var(--muted);
-      max-width:900px;
+      max-width:920px;
     }
 
     .grid{
@@ -433,30 +431,41 @@
       margin-bottom:18px;
     }
 
-    .nace-box{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,0.02);
-      padding:16px;
-      margin-bottom:16px;
+    .nace-block{
+      margin-bottom:22px;
     }
 
-    .nace-box-title{
-      font-size:11px;
-      letter-spacing:0.14em;
-      text-transform:uppercase;
-      color:var(--muted-2);
-      margin-bottom:10px;
-    }
-
-    .nace-box-copy{
-      font-size:14px;
-      line-height:1.7;
+    .nace-copy{
+      font-size:15px;
+      line-height:1.62;
       color:#e8e8ea;
+    }
+
+    .language-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:14px;
+    }
+
+    .lang-btn{
+      background:transparent;
+      color:var(--text);
+      border:1px solid var(--line);
+      padding:6px 10px;
+      font-size:12px;
+      letter-spacing:0.06em;
+      cursor:pointer;
+      border-radius:0;
+    }
+
+    .lang-btn:hover{
+      background:#111;
     }
 
     .state-line{
       font-size:12px;
-      line-height:1.6;
+      line-height:1.5;
       color:var(--muted);
       border-top:1px solid var(--line);
       padding-top:16px;
@@ -593,8 +602,7 @@
       }
 
       .section,
-      .summary-box,
-      .nace-box{
+      .summary-box{
         padding:18px 16px;
       }
 
@@ -736,29 +744,23 @@
           <div class="nace-label">NACE</div>
           <div class="nace-title">Institutional Interface</div>
 
-          <div class="nace-box">
-            <div class="nace-box-title">Intake Status</div>
-            <div class="nace-box-copy" id="nace-guidance">
+          <div class="nace-block">
+            <div class="nace-copy" id="nace-guidance">
               Intake confirmed. NACE is guiding this operator from diagnostic truth into structured correction.
             </div>
-          </div>
 
-          <div class="nace-box">
-            <div class="nace-box-title">Builder Transition</div>
-            <div class="nace-box-copy">
-              This intake converts paid entry into structured placement, preserving continuity from PBRS while preparing the next execution step.
+            <div class="language-row">
+              <button class="lang-btn" type="button">English</button>
+              <button class="lang-btn" type="button">Español</button>
+              <button class="lang-btn" type="button">Français</button>
+              <button class="lang-btn" type="button">Deutsch</button>
+              <button class="lang-btn" type="button">العربية</button>
+              <button class="lang-btn" type="button">中文</button>
             </div>
           </div>
 
-          <div class="nace-box">
-            <div class="nace-box-title">Progression Standard</div>
-            <div class="nace-box-copy" id="nace-state-line">
-              Builder progression is condition-based. The selected path is being aligned with current score, bottleneck signal, and stage continuity from PBRS.
-            </div>
-          </div>
-
-          <div class="state-line">
-            This layer follows PBRS, confirms Builder entry, and advances the operator into deeper signal capture through the Precision Business Probe.
+          <div class="state-line" id="nace-state-line">
+            Builder progression is condition-based. The selected path is being aligned with current score, bottleneck signal, and stage continuity from PBRS.
           </div>
         </aside>
       </section>
