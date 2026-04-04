@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Phoenix Business Builder — Intake</title>
+  <title>Phoenix Business Builder</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -19,6 +19,7 @@
       --muted:#a8afb8;
       --muted-2:#7f8791;
       --gold:#c9a227;
+      --gold-2:#e0bc54;
       --line:#232831;
       --line-2:#1b1f26;
       --blue-glow:rgba(49,95,188,0.16);
@@ -53,8 +54,9 @@
 
     button{
       font:inherit;
-      border:none;
+      cursor:pointer;
       background:none;
+      border:none;
     }
 
     .page{
@@ -121,12 +123,12 @@
 
     .headline{
       font-family:"Cinzel", serif;
-      font-size:clamp(26px, 2.6vw, 44px);
+      font-size:clamp(26px, 2.7vw, 46px);
       line-height:1.06;
       letter-spacing:0.04em;
       text-transform:uppercase;
       font-weight:600;
-      max-width:1100px;
+      max-width:1180px;
       margin:0 auto 18px;
       background:linear-gradient(
         180deg,
@@ -149,12 +151,12 @@
       line-height:1.5;
       color:var(--muted);
       max-width:860px;
-      margin:0 auto 20px;
+      margin:0 auto 22px;
     }
 
-    .authority-line{
+    .price-line{
       font-family:"Cinzel", serif;
-      font-size:clamp(18px, 1.45vw, 24px);
+      font-size:clamp(20px, 1.6vw, 28px);
       line-height:1.1;
       letter-spacing:0.08em;
       text-transform:uppercase;
@@ -173,7 +175,7 @@
     .main-panel{
       background:linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 100%);
       border:1px solid var(--line);
-      padding:32px;
+      padding:28px;
       min-height:560px;
       backdrop-filter:blur(4px);
       box-shadow:var(--shadow);
@@ -187,193 +189,236 @@
       margin-bottom:16px;
     }
 
-    .section{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,0.02);
-      padding:24px;
-      margin-bottom:20px;
-    }
-
-    .section:last-child{
-      margin-bottom:0;
-    }
-
-    .section-label{
-      font-size:11px;
-      letter-spacing:0.16em;
-      text-transform:uppercase;
-      color:var(--muted-2);
-      margin-bottom:12px;
-    }
-
-    .section-title{
+    .panel-title{
       font-family:"Cinzel", serif;
       font-size:24px;
-      letter-spacing:0.04em;
+      letter-spacing:0.05em;
       text-transform:uppercase;
       margin-bottom:12px;
       color:var(--text);
-      line-height:1.2;
+      line-height:1.25;
     }
 
-    .section-copy{
+    .panel-copy{
       font-size:15px;
-      line-height:1.68;
+      line-height:1.65;
       color:var(--muted);
-      max-width:920px;
+      max-width:860px;
+      margin-bottom:24px;
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-      gap:20px;
-    }
-
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-
-    .field.full{
-      grid-column:1 / -1;
-    }
-
-    label{
-      font-size:11px;
-      letter-spacing:0.14em;
-      text-transform:uppercase;
-      color:var(--text);
-      font-weight:600;
-    }
-
-    input, select, textarea{
-      width:100%;
-      appearance:none;
-      border:1px solid rgba(255,255,255,0.08);
-      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
-      color:var(--text);
-      padding:16px 16px;
-      font-size:15px;
-      line-height:1.4;
-      outline:none;
-      transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
-      font-family:"Inter", Arial, sans-serif;
-      border-radius:0;
-    }
-
-    input::placeholder,
-    textarea::placeholder{
-      color:rgba(243,244,246,0.40);
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus{
-      border-color:rgba(201,162,39,0.45);
-      box-shadow:0 0 0 4px rgba(201,162,39,0.08);
-      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-    }
-
-    select{
-      cursor:pointer;
-      background-image:
-        linear-gradient(45deg, transparent 50%, var(--muted) 50%),
-        linear-gradient(135deg, var(--muted) 50%, transparent 50%);
-      background-position:
-        calc(100% - 24px) calc(50% - 3px),
-        calc(100% - 18px) calc(50% - 3px);
-      background-size:6px 6px, 6px 6px;
-      background-repeat:no-repeat;
-      padding-right:42px;
-    }
-
-    textarea{
-      min-height:150px;
-      resize:vertical;
-    }
-
-    .summary{
+    .logic-grid{
       display:grid;
       grid-template-columns:1.1fr 0.9fr;
       gap:20px;
-      margin-top:22px;
+      margin-bottom:20px;
     }
 
-    .summary-box{
+    .logic-box{
       border:1px solid var(--line);
-      background:rgba(255,255,255,0.018);
-      padding:20px;
+      background:rgba(255,255,255,0.02);
+      padding:22px;
+      min-height:100%;
     }
 
-    .summary-title{
-      margin:0 0 12px;
-      font-family:"Cinzel", serif;
-      font-size:15px;
-      letter-spacing:0.05em;
+    .logic-label{
+      font-size:11px;
+      letter-spacing:0.16em;
       text-transform:uppercase;
-      color:var(--text);
+      color:var(--gold);
+      margin-bottom:12px;
+    }
+
+    .logic-title{
+      font-family:"Cinzel", serif;
+      font-size:18px;
       line-height:1.35;
+      text-transform:uppercase;
+      margin-bottom:12px;
     }
 
-    .summary-copy{
-      margin:0;
-      color:var(--muted);
+    .logic-copy{
+      font-size:15px;
       line-height:1.7;
-      font-size:14px;
-    }
-
-    .summary-copy strong{
-      color:var(--text);
-      font-weight:600;
+      color:var(--muted);
     }
 
     .signal-list{
       display:grid;
-      gap:10px;
-      margin-top:14px;
+      gap:12px;
+      margin-top:18px;
     }
 
     .signal{
       border:1px solid var(--line-2);
       background:rgba(255,255,255,0.02);
-      color:var(--muted);
-      line-height:1.55;
-      font-size:14px;
       padding:14px 16px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55;
     }
 
     .signal strong{
       color:var(--text);
     }
 
-    .hidden{
-      display:none !important;
+    .tiers-wrap{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.02);
+      padding:24px;
+      margin-bottom:20px;
     }
 
-    .actions{
+    .tiers-kicker{
+      font-size:11px;
+      letter-spacing:0.16em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin-bottom:12px;
+    }
+
+    .tiers-title{
+      font-family:"Cinzel", serif;
+      font-size:24px;
+      line-height:1.22;
+      text-transform:uppercase;
+      margin-bottom:12px;
+    }
+
+    .tiers-sub{
+      font-size:15px;
+      line-height:1.65;
+      color:var(--muted);
+      margin-bottom:22px;
+      max-width:860px;
+    }
+
+    .tier-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:18px;
+    }
+
+    .tier-card{
+      position:relative;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.02);
+      padding:24px 20px 22px;
+      min-height:100%;
       display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:20px;
-      margin-top:22px;
+      flex-direction:column;
+    }
+
+    .tier-card.recommended{
+      border-color:rgba(201,162,39,0.70);
+      box-shadow:inset 0 0 0 1px rgba(201,162,39,0.14);
+    }
+
+    .recommended-badge{
+      position:absolute;
+      top:14px;
+      right:14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:30px;
+      padding:0 10px;
+      border:1px solid rgba(201,162,39,0.70);
+      background:rgba(9,9,9,0.96);
+      color:#f3f4f6;
+      font-size:10px;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      white-space:nowrap;
+      z-index:3;
+    }
+
+    .tier-name{
+      font-family:"Cinzel", serif;
+      font-size:24px;
+      line-height:1.08;
+      text-transform:uppercase;
+      margin-bottom:14px;
+      padding-right:132px;
+    }
+
+    .tier-tagline{
+      font-size:15px;
+      line-height:1.62;
+      color:var(--muted);
+      min-height:120px;
+      margin-bottom:18px;
+    }
+
+    .tier-price-row{
+      display:flex;
+      align-items:flex-end;
+      gap:10px;
+      margin-bottom:18px;
       flex-wrap:wrap;
     }
 
-    .micro{
-      max-width:680px;
-      color:var(--muted-2);
-      font-size:14px;
-      line-height:1.7;
+    .tier-price{
+      font-family:"Cinzel", serif;
+      font-size:52px;
+      line-height:0.92;
+      color:var(--text);
+    }
+
+    .tier-price-note{
+      font-size:13px;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color:#cfd4da;
+      padding-bottom:6px;
+    }
+
+    .tier-list{
+      list-style:none;
+      display:grid;
+      gap:10px;
+      margin-bottom:18px;
+      padding-left:0;
+      min-height:168px;
+    }
+
+    .tier-list li{
+      position:relative;
+      padding-left:18px;
+      font-size:15px;
+      line-height:1.55;
+      color:var(--text);
+    }
+
+    .tier-list li::before{
+      content:"•";
+      position:absolute;
+      left:0;
+      top:0;
+      color:var(--gold-2);
+    }
+
+    .tier-outcome{
+      border-top:1px solid var(--line-2);
+      padding-top:16px;
+      margin-top:auto;
+      font-size:15px;
+      line-height:1.65;
+      color:var(--muted);
+      min-height:110px;
+    }
+
+    .tier-actions{
+      margin-top:18px;
     }
 
     .cta{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-width:340px;
-      min-height:58px;
-      padding:16px 28px;
+      width:100%;
+      min-height:56px;
+      padding:16px 20px;
       border:1px solid var(--gold);
       color:var(--text);
       text-decoration:none;
@@ -393,6 +438,85 @@
       color:#111;
       border-color:var(--gold);
       transform:translateY(-1px);
+    }
+
+    .continuity{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.02);
+      padding:24px;
+    }
+
+    .continuity-grid{
+      display:grid;
+      grid-template-columns:1.2fr 0.8fr;
+      gap:20px;
+      align-items:start;
+    }
+
+    .continuity-title{
+      font-family:"Cinzel", serif;
+      font-size:22px;
+      line-height:1.25;
+      text-transform:uppercase;
+      margin-bottom:12px;
+    }
+
+    .continuity-copy{
+      font-size:15px;
+      line-height:1.68;
+      color:var(--muted);
+      margin-bottom:16px;
+    }
+
+    .continuity-list{
+      padding-left:18px;
+      color:var(--text);
+      line-height:1.7;
+      font-size:15px;
+    }
+
+    .next-box{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.02);
+      padding:18px;
+      min-height:100%;
+    }
+
+    .next-label{
+      font-size:11px;
+      letter-spacing:0.16em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin-bottom:10px;
+    }
+
+    .next-title{
+      font-family:"Cinzel", serif;
+      font-size:18px;
+      text-transform:uppercase;
+      margin-bottom:12px;
+    }
+
+    .next-copy{
+      font-size:14px;
+      line-height:1.65;
+      color:var(--muted);
+      margin-bottom:16px;
+    }
+
+    .flow-chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:42px;
+      padding:0 16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.02);
+      font-family:"Cinzel", serif;
+      font-size:14px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--text);
     }
 
     .nace-rail{
@@ -465,7 +589,7 @@
 
     .state-line{
       font-size:12px;
-      line-height:1.5;
+      line-height:1.55;
       color:var(--muted);
       border-top:1px solid var(--line);
       padding-top:16px;
@@ -480,7 +604,7 @@
       padding:14px 24px;
       border:1px solid var(--line);
       background:rgba(255,255,255,0.02);
-      width:min(980px, 94%);
+      width:min(940px, 94%);
       margin:26px auto 0;
     }
 
@@ -534,6 +658,18 @@
       color:#cfd4da;
     }
 
+    @media (max-width: 1180px){
+      .tier-grid{
+        grid-template-columns:1fr;
+      }
+
+      .tier-tagline,
+      .tier-list,
+      .tier-outcome{
+        min-height:auto;
+      }
+    }
+
     @media (max-width: 1080px){
       .workspace{
         grid-template-columns:1fr;
@@ -550,8 +686,8 @@
     }
 
     @media (max-width: 900px){
-      .summary,
-      .grid{
+      .logic-grid,
+      .continuity-grid{
         grid-template-columns:1fr;
       }
     }
@@ -592,7 +728,7 @@
         margin-bottom:18px;
       }
 
-      .authority-line{
+      .price-line{
         font-size:18px;
         margin-bottom:20px;
       }
@@ -601,8 +737,10 @@
         padding:20px 16px;
       }
 
-      .section,
-      .summary-box{
+      .logic-box,
+      .tiers-wrap,
+      .continuity,
+      .tier-card{
         padding:18px 16px;
       }
 
@@ -625,9 +763,29 @@
         gap:8px;
       }
 
-      .cta{
-        width:100%;
-        min-width:unset;
+      .recommended-badge{
+        top:12px;
+        right:12px;
+      }
+
+      .tier-name{
+        padding-right:124px;
+      }
+
+      .tier-price{
+        font-size:44px;
+      }
+    }
+
+    @media (max-width: 480px){
+      .tier-name{
+        padding-right:0;
+        margin-top:36px;
+      }
+
+      .recommended-badge{
+        left:16px;
+        right:auto;
       }
     }
   </style>
@@ -642,101 +800,169 @@
 
     <div class="shell">
       <section class="hero">
-        <h1 class="headline">Phoenix Business Builder — Intake</h1>
+        <h1 class="headline">Phoenix Business Builder</h1>
         <p class="subline">
-          Your payment has been confirmed. Complete this intake so Rising Phoenix can place you into the correct execution path with structured continuity from diagnosis into build.
+          Controlled correction layer for operators progressing beyond diagnostic evaluation.
         </p>
-        <div class="authority-line">Structured Builder Intake Layer</div>
+        <div class="price-line">Monetization Layer Active</div>
       </section>
 
       <section class="workspace">
         <div class="main-panel">
-          <div class="panel-kicker">PBB Intake</div>
+          <div class="panel-kicker">Controlled Correction Layer</div>
+          <h2 class="panel-title">Structured Correction for Operators Ready to Build with Precision</h2>
+          <p class="panel-copy">
+            Phoenix Business Builder is the execution layer that follows diagnostic truth. It receives businesses that have already been evaluated, translates that diagnostic position into corrective build selection, and establishes the appropriate path into governed execution.
+          </p>
 
-          <section class="section">
-            <div class="section-label">Structured Intake</div>
-            <h2 class="section-title">Operator Entry Confirmation</h2>
-            <p class="section-copy">
-              This intake confirms paid entry into the Builder correction layer. Once submitted, your data is merged into the execution object and advanced into the Precision Business Probe.
-            </p>
+          <div class="logic-grid">
+            <div class="logic-box">
+              <div class="logic-label">Why This Layer Exists</div>
+              <div class="logic-title">Diagnosis identifies gaps. Builder corrects them.</div>
+              <div class="logic-copy">
+                PBRS was never designed to stand alone. Its purpose is to expose structural weakness, identify the dominant bottleneck, and determine what must be corrected before safe progression.
+              </div>
+
+              <div class="signal-list">
+                <div class="signal"><strong>Foundation</strong> corrects core instability and restores baseline structural integrity.</div>
+                <div class="signal"><strong>Structure</strong> installs execution discipline, operational clarity, and controlled workflow.</div>
+                <div class="signal"><strong>Scale</strong> positions the organization for expansion, sequencing, and higher-order readiness.</div>
+              </div>
+            </div>
+
+            <div class="logic-box">
+              <div class="logic-label">System Position</div>
+              <div class="logic-title">PBRS → PBB</div>
+              <div class="logic-copy">
+                This layer follows diagnosis and initiates paid corrective execution. Progression does not occur randomly. It is governed by seriousness, structural need, and operator condition.
+              </div>
+
+              <div class="signal-list">
+                <div class="signal"><strong>Input:</strong> PBRS score, bottleneck, readiness condition.</div>
+                <div class="signal"><strong>Output:</strong> selected build tier and structured paid entry.</div>
+                <div class="signal"><strong>Next:</strong> movement into PBSEQ governance after payment and intake.</div>
+              </div>
+            </div>
+          </div>
+
+          <section class="tiers-wrap">
+            <div class="tiers-kicker">Select Your Build Level</div>
+            <div class="tiers-title">Three Controlled Tiers. One Governed Progression Path.</div>
+            <div class="tiers-sub">
+              Choose the level that matches your current operational condition and the seriousness of your execution objective.
+            </div>
+
+            <div class="tier-grid">
+              <article class="tier-card">
+                <div class="tier-name">Foundation</div>
+                <div class="tier-tagline">
+                  Stabilization layer for operators requiring immediate structural correction and execution grounding.
+                </div>
+
+                <div class="tier-price-row">
+                  <div class="tier-price">$497</div>
+                  <div class="tier-price-note">One-Time</div>
+                </div>
+
+                <ul class="tier-list">
+                  <li>PBRS diagnostic interpretation</li>
+                  <li>Foundational system correction</li>
+                  <li>Operational structure guidance</li>
+                  <li>30-day execution plan</li>
+                </ul>
+
+                <div class="tier-outcome">
+                  Outcome: business condition becomes more stable, more legible, and more execution-ready.
+                </div>
+
+                <div class="tier-actions">
+                  <a href="https://buy.stripe.com/28EdR95M40E4b6m2cdfYY0c" class="cta">Start Foundation</a>
+                </div>
+              </article>
+
+              <article class="tier-card recommended">
+                <div class="recommended-badge">Recommended</div>
+                <div class="tier-name">Structure</div>
+                <div class="tier-tagline">
+                  Operational structuring layer for operators building serious execution systems and aligned workflow.
+                </div>
+
+                <div class="tier-price-row">
+                  <div class="tier-price">$1,497</div>
+                  <div class="tier-price-note">One-Time</div>
+                </div>
+
+                <ul class="tier-list">
+                  <li>Process alignment and execution design</li>
+                  <li>System architecture correction</li>
+                  <li>Operational discipline installation</li>
+                  <li>60-day structured implementation plan</li>
+                </ul>
+
+                <div class="tier-outcome">
+                  Outcome: business becomes more ordered, more controlled, and structurally prepared for progression.
+                </div>
+
+                <div class="tier-actions">
+                  <a href="https://buy.stripe.com/4gM00j6Q872sfmC8ABfYY0b" class="cta">Build Structure</a>
+                </div>
+              </article>
+
+              <article class="tier-card">
+                <div class="tier-name">Scale</div>
+                <div class="tier-tagline">
+                  Advanced scaling layer for serious operators positioning for controlled expansion and strategic advancement.
+                </div>
+
+                <div class="tier-price-row">
+                  <div class="tier-price">$3,997</div>
+                  <div class="tier-price-note">One-Time</div>
+                </div>
+
+                <ul class="tier-list">
+                  <li>Strategic alignment and infrastructure expansion</li>
+                  <li>Execution oversight refinement</li>
+                  <li>Growth architecture review</li>
+                  <li>90-day scale implementation framework</li>
+                </ul>
+
+                <div class="tier-outcome">
+                  Outcome: organization becomes positioned for higher-order scale, sequence, and capital preparation.
+                </div>
+
+                <div class="tier-actions">
+                  <a href="https://buy.stripe.com/7sYdR95M4cmM8Ye5opfYY0a" class="cta">Scale Operations</a>
+                </div>
+              </article>
+            </div>
           </section>
 
-          <section class="section">
-            <div class="section-label">Operator Information</div>
-
-            <form id="pbb-intake-form" novalidate>
-              <div class="grid">
-                <div class="field">
-                  <label for="full_name">Full Name</label>
-                  <input id="full_name" name="full_name" type="text" placeholder="Enter full name" autocomplete="name" />
+          <section class="continuity">
+            <div class="continuity-grid">
+              <div>
+                <div class="panel-kicker" style="margin-bottom:12px;">Post-Purchase Progression</div>
+                <div class="continuity-title">Payment confirms entry into the next governed layer.</div>
+                <div class="continuity-copy">
+                  After payment confirmation, the business is prepared for sequence-based progression. This purchase is not the end of the flow. It is the activation of the next layer.
                 </div>
 
-                <div class="field">
-                  <label for="email">Email</label>
-                  <input id="email" name="email" type="email" placeholder="Enter email address" autocomplete="email" />
-                </div>
-
-                <div class="field full">
-                  <label for="business_name">Business Name</label>
-                  <input id="business_name" name="business_name" type="text" placeholder="Enter business name" autocomplete="organization" />
-                </div>
-
-                <div class="field">
-                  <label for="selected_tier">Selected Tier</label>
-                  <select id="selected_tier" name="selected_tier">
-                    <option value="">Select tier</option>
-                    <option value="foundation">Foundation</option>
-                    <option value="structure">Structure</option>
-                    <option value="scale">Scale</option>
-                  </select>
-                </div>
-
-                <div class="field">
-                  <label for="priority_track">Priority Track</label>
-                  <select id="priority_track" name="priority_track">
-                    <option value="">Select track</option>
-                    <option value="stabilization">Stabilization</option>
-                    <option value="correction">Correction</option>
-                    <option value="optimization">Optimization</option>
-                  </select>
-                </div>
-
-                <div class="field full">
-                  <label for="primary_objective">Primary Objective</label>
-                  <textarea id="primary_objective" name="primary_objective" placeholder="State your current objective."></textarea>
-                </div>
+                <ul class="continuity-list">
+                  <li>Tier selection confirmed</li>
+                  <li>Paid entry established</li>
+                  <li>PBB intake triggered</li>
+                  <li>PBSEQ progression path introduced after builder intake</li>
+                </ul>
               </div>
 
-              <div class="summary hidden" id="continuity-block">
-                <div class="summary-box">
-                  <h3 class="summary-title">Continuity from PBRS</h3>
-                  <p class="summary-copy" id="continuity-copy">
-                    Your PBRS diagnostic has been carried into this intake. Builder now converts diagnostic truth into a controlled correction path.
-                  </p>
-
-                  <div class="signal-list">
-                    <div class="signal" id="signal-score"><strong>Phoenix Rating Score:</strong> —</div>
-                    <div class="signal" id="signal-band"><strong>Score Band:</strong> —</div>
-                    <div class="signal" id="signal-bottleneck"><strong>Primary Bottleneck:</strong> —</div>
-                    <div class="signal" id="signal-classification"><strong>Classification:</strong> —</div>
-                  </div>
+              <div class="next-box">
+                <div class="next-label">Next Layer</div>
+                <div class="next-title">PBSEQ</div>
+                <div class="next-copy">
+                  After selection and payment, progression moves into governed sequence control, execution acknowledgment, and token-based forward movement.
                 </div>
-
-                <div class="summary-box">
-                  <h3 class="summary-title">Builder Position</h3>
-                  <p class="summary-copy" id="builder-position-copy">
-                    This intake confirms operator entry into the next execution layer. After submission, progression moves into the Precision Business Probe.
-                  </p>
-                </div>
+                <div class="flow-chip">PBSEQ Next</div>
               </div>
-
-              <div class="actions">
-                <div class="micro" id="micro-note">
-                  After submission, your intake is captured, merged into the PBB execution object, and advanced into the Precision Business Probe for deeper operational signal collection.
-                </div>
-                <button class="cta" type="submit" id="submit-btn">Continue to Precision Probe</button>
-              </div>
-            </form>
+            </div>
           </section>
         </div>
 
@@ -745,22 +971,24 @@
           <div class="nace-title">Institutional Interface</div>
 
           <div class="nace-block">
-            <div class="nace-copy" id="nace-guidance">
-              Intake confirmed. NACE is guiding this operator from diagnostic truth into structured correction.
+            <div class="nace-copy" id="naceCopy">
+              Phoenix Business Builder is the controlled correction layer within PBS.<br><br>
+              This surface receives businesses that have already passed through diagnosis and are now entering build-path selection.<br><br>
+              Progression does not occur randomly. It is governed by seriousness, structural need, and operator condition.
             </div>
 
             <div class="language-row">
-              <button class="lang-btn" type="button">English</button>
-              <button class="lang-btn" type="button">Español</button>
-              <button class="lang-btn" type="button">Français</button>
-              <button class="lang-btn" type="button">Deutsch</button>
-              <button class="lang-btn" type="button">العربية</button>
-              <button class="lang-btn" type="button">中文</button>
+              <button class="lang-btn" type="button" data-lang="en">English</button>
+              <button class="lang-btn" type="button" data-lang="es">Español</button>
+              <button class="lang-btn" type="button" data-lang="fr">Français</button>
+              <button class="lang-btn" type="button" data-lang="de">Deutsch</button>
+              <button class="lang-btn" type="button" data-lang="ar">العربية</button>
+              <button class="lang-btn" type="button" data-lang="zh">中文</button>
             </div>
           </div>
 
-          <div class="state-line" id="nace-state-line">
-            Builder progression is condition-based. The selected path is being aligned with current score, bottleneck signal, and stage continuity from PBRS.
+          <div class="state-line" id="naceState">
+            This layer follows PBRS, precedes PBSEQ, and establishes paid corrective entry into structured progression.
           </div>
         </aside>
       </section>
@@ -775,8 +1003,6 @@
           <span>PBSEQ</span>
           <span class="arrow">→</span>
           <span>PNC</span>
-          <span class="arrow">→</span>
-          <span>PBIP</span>
         </div>
       </div>
 
@@ -790,158 +1016,55 @@
   </main>
 
   <script>
-    function clean(value) {
-      return String(value || "").trim();
-    }
+    const naceCopy = document.getElementById("naceCopy");
+    const naceState = document.getElementById("naceState");
 
-    function titleCase(value) {
-      if (!value) return "—";
-      return String(value)
-        .replace(/_/g, " ")
-        .replace(/\b\w/g, function(char) { return char.toUpperCase(); });
-    }
-
-    function setValue(id, value) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      if (value !== undefined && value !== null && value !== "") {
-        el.value = value;
+    const langMap = {
+      en: {
+        copy: `Phoenix Business Builder is the controlled correction layer within PBS.<br><br>
+        This surface receives businesses that have already passed through diagnosis and are now entering build-path selection.<br><br>
+        Progression does not occur randomly. It is governed by seriousness, structural need, and operator condition.`,
+        state: `This layer follows PBRS, precedes PBSEQ, and establishes paid corrective entry into structured progression.`
+      },
+      es: {
+        copy: `Phoenix Business Builder es la capa de corrección controlada dentro de PBS.<br><br>
+        Esta superficie recibe negocios que ya pasaron por diagnóstico y ahora entran en la selección de ruta de construcción.<br><br>
+        La progresión no ocurre al azar. Está gobernada por seriedad, necesidad estructural y condición operativa.`,
+        state: `Esta capa sigue a PBRS, precede a PBSEQ y establece una entrada correctiva pagada dentro de una progresión estructurada.`
+      },
+      fr: {
+        copy: `Phoenix Business Builder est la couche de correction contrôlée au sein du PBS.<br><br>
+        Cette surface reçoit les entreprises déjà passées par le diagnostic et maintenant orientées vers la sélection de trajectoire de construction.<br><br>
+        La progression n’est pas aléatoire. Elle est gouvernée par le sérieux, le besoin structurel et la condition opérationnelle.`,
+        state: `Cette couche suit PBRS, précède PBSEQ et établit une entrée corrective payante dans une progression structurée.`
+      },
+      de: {
+        copy: `Phoenix Business Builder ist die kontrollierte Korrekturebene innerhalb von PBS.<br><br>
+        Diese Oberfläche empfängt Unternehmen, die bereits die Diagnose durchlaufen haben und nun in die Auswahl des Aufbaupfads eintreten.<br><br>
+        Fortschritt erfolgt nicht zufällig. Er wird durch Ernsthaftigkeit, strukturellen Bedarf und operative Lage bestimmt.`,
+        state: `Diese Ebene folgt auf PBRS, geht PBSEQ voraus und etabliert einen bezahlten korrigierenden Eintritt in einen strukturierten Fortschritt.`
+      },
+      ar: {
+        copy: `Phoenix Business Builder هو طبقة التصحيح المنضبط داخل PBS.<br><br>
+        تستقبل هذه الواجهة الجهات التي اجتازت التشخيص بالفعل وتدخل الآن مرحلة اختيار مسار البناء.<br><br>
+        التقدم لا يحدث عشوائياً، بل تحكمه الجدية والحاجة الهيكلية والحالة التشغيلية.`,
+        state: `تأتي هذه الطبقة بعد PBRS وقبل PBSEQ وتؤسس دخولاً تصحيحياً مدفوعاً ضمن تقدم منظم.`
+      },
+      zh: {
+        copy: `Phoenix Business Builder 是 PBS 体系中的受控修正层。<br><br>
+        该界面接收已经完成诊断、正在进入构建路径选择阶段的企业。<br><br>
+        进展不会随机发生，而是由严肃程度、结构性需求和运营状态共同决定。`,
+        state: `该层位于 PBRS 之后、PBSEQ 之前，用于建立进入结构化推进的付费修正入口。`
       }
-    }
-
-    function setText(id, value) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.innerHTML = value;
-    }
-
-    function getQueryParams() {
-      const params = new URLSearchParams(window.location.search);
-      return {
-        full_name: clean(params.get("full_name")),
-        email: clean(params.get("email")),
-        business_name: clean(params.get("business_name")),
-        selected_tier: clean(params.get("selected_tier")),
-        primary_objective: clean(params.get("primary_objective"))
-      };
-    }
-
-    function chooseTier(existing) {
-      const explicit = clean(existing.selected_tier || existing.recommended_tier || "");
-      if (explicit) return explicit.toLowerCase();
-
-      const score = Number(existing.prs_score || existing.score_final || 0);
-
-      if (score >= 85) return "scale";
-      if (score >= 60) return "structure";
-      return "foundation";
-    }
-
-    const query = getQueryParams();
-    const pbbFull = JSON.parse(localStorage.getItem("pbb_full") || "{}");
-    const pbrsIntake = JSON.parse(localStorage.getItem("pbrs_intake") || "{}");
-
-    const mergedSeed = {
-      ...pbrsIntake,
-      ...pbbFull,
-      ...query
     };
 
-    const selectedTier = chooseTier(mergedSeed);
-
-    setValue("full_name", mergedSeed.full_name || mergedSeed.customer_name || "");
-    setValue("email", mergedSeed.email || mergedSeed.customer_email || "");
-    setValue("business_name", mergedSeed.business_name || mergedSeed.legal_name || "");
-    setValue("selected_tier", selectedTier);
-    setValue("primary_objective", mergedSeed.primary_objective || mergedSeed.notes || "");
-
-    const trackMap = {
-      foundation: "stabilization",
-      structure: "correction",
-      scale: "optimization"
-    };
-    setValue("priority_track", trackMap[selectedTier] || "");
-
-    const hasContinuityData =
-      mergedSeed.prs_score ||
-      mergedSeed.score_final ||
-      mergedSeed.biggest_bottleneck ||
-      mergedSeed.classification;
-
-    if (hasContinuityData) {
-      document.getElementById("continuity-block").classList.remove("hidden");
-
-      setText(
-        "continuity-copy",
-        "Your PBRS diagnostic has been carried into this intake. <strong>Builder now converts diagnostic truth into a controlled correction path.</strong>"
-      );
-
-      setText(
-        "signal-score",
-        "<strong>Phoenix Rating Score:</strong> " + clean(mergedSeed.prs_score || mergedSeed.score_final || "—")
-      );
-
-      setText(
-        "signal-band",
-        "<strong>Score Band:</strong> " + titleCase(mergedSeed.score_band || "—")
-      );
-
-      setText(
-        "signal-bottleneck",
-        "<strong>Primary Bottleneck:</strong> " + titleCase(mergedSeed.biggest_bottleneck || "—")
-      );
-
-      setText(
-        "signal-classification",
-        "<strong>Classification:</strong> " + clean(mergedSeed.classification || "—")
-      );
-
-      const bottleneckText = titleCase(mergedSeed.biggest_bottleneck || "structural weakness");
-      const scoreText = clean(mergedSeed.prs_score || mergedSeed.score_final || "current");
-      const classText = clean(mergedSeed.classification || "current condition");
-
-      setText(
-        "nace-guidance",
-        "NACE Guidance: PBRS has already established score, condition, and bottleneck signal. This intake now positions the operator for controlled correction inside PBB. Current score: <strong>" + scoreText + "</strong>. Current bottleneck: <strong>" + bottleneckText + "</strong>."
-      );
-
-      setText(
-        "nace-state-line",
-        "Progression inside PBS is condition-based. Current classification: " + classText + ". Builder is being used to translate this evaluated state into structured execution."
-      );
-    }
-
-    const form = document.getElementById("pbb-intake-form");
-
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const intakeData = {
-        full_name: clean(document.getElementById("full_name").value),
-        email: clean(document.getElementById("email").value),
-        business_name: clean(document.getElementById("business_name").value),
-        selected_tier: clean(document.getElementById("selected_tier").value).toLowerCase(),
-        priority_track: clean(document.getElementById("priority_track").value).toLowerCase(),
-        primary_objective: clean(document.getElementById("primary_objective").value)
-      };
-
-      const existing = JSON.parse(localStorage.getItem("pbb_full") || "{}");
-
-      const merged = {
-        ...existing,
-        ...pbrsIntake,
-        ...query,
-        ...intakeData,
-        notes: intakeData.primary_objective,
-        current_stage: "pbb_intake",
-        next_stage: "pbb_probe",
-        execution_entry_confirmed: true
-      };
-
-      localStorage.setItem("pbb_intake", JSON.stringify(intakeData));
-      localStorage.setItem("pbb_full", JSON.stringify(merged));
-
-      window.location.href = "https://pbb.risingphoenixhq.com/probe.html";
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const lang = btn.dataset.lang;
+        if (!langMap[lang]) return;
+        naceCopy.innerHTML = langMap[lang].copy;
+        naceState.textContent = langMap[lang].state;
+      });
     });
   </script>
 </body>
