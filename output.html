@@ -1,292 +1,723 @@
+<!-- ========================================================= -->
+<!-- PBB OUTPUT — OPERATIONAL INTELLIGENCE DOSSIER -->
+<!-- ========================================================= -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Phoenix Business Builder — Business Assessment</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-:root {
-  --bg:#0b0f14;
-  --panel:#101722;
-  --border:rgba(255,255,255,0.08);
-  --text:#f5efe6;
-  --muted:rgba(245,239,230,0.75);
-  --gold:#c7a15b;
-}
+  <title>Phoenix Business System — Operational Intelligence Dossier</title>
 
-body {
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family: Inter, system-ui;
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-.container {
-  max-width:1000px;
-  margin:auto;
-  padding:40px 20px;
-}
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-h1 {
-  font-size:40px;
-  margin-bottom:10px;
-}
+  <style>
 
-h2 {
-  margin-top:40px;
-  font-size:22px;
-}
+    :root{
+      --bg:#050505;
+      --panel:#0d1016;
+      --panel-2:#12161d;
+      --line:#202632;
+      --line-soft:#1a1f28;
+      --text:#f3f4f6;
+      --muted:#99a2ad;
+      --muted-2:#707883;
+      --gold:#c9a227;
+      --gold-soft:rgba(201,162,39,0.14);
+      --red:#d35d5d;
+      --amber:#d4aa4f;
+      --green:#5eb97f;
+      --blue:#5576d6;
+    }
 
-p {
-  color:var(--muted);
-  line-height:1.6;
-}
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
-.panel {
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:20px;
-  margin-top:20px;
-}
+    body{
+      background:
+        radial-gradient(circle at top, rgba(201,162,39,0.08), transparent 32%),
+        linear-gradient(180deg,#060606 0%, #050505 100%);
+      color:var(--text);
+      font-family:"Inter",sans-serif;
+      min-height:100vh;
+    }
 
-.score {
-  font-size:46px;
-  color:var(--gold);
-}
+    .page{
+      width:min(1380px,94vw);
+      margin:auto;
+      padding:48px 0 80px;
+    }
 
-ul {
-  padding-left:20px;
-}
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-bottom:1px solid var(--line);
+      padding-bottom:18px;
+      margin-bottom:42px;
+    }
 
-li {
-  margin-bottom:8px;
-}
+    .system-id{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
 
-.button {
-  margin-top:40px;
-  background:linear-gradient(135deg,#d6b46a,#c7a15b);
-  color:black;
-  padding:16px;
-  text-align:center;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:600;
-}
-</style>
+    .system-kicker{
+      font-size:11px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:var(--muted-2);
+    }
+
+    .system-title{
+      font-family:"Cinzel",serif;
+      font-size:26px;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+
+    .classification{
+      border:1px solid rgba(201,162,39,.35);
+      background:rgba(201,162,39,.05);
+      padding:10px 14px;
+      font-size:11px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--gold);
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:420px 1fr;
+      gap:28px;
+      margin-bottom:28px;
+    }
+
+    .score-panel{
+      border:1px solid rgba(201,162,39,.28);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      padding:34px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .score-panel::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), transparent 18%);
+      pointer-events:none;
+    }
+
+    .score-label{
+      font-size:11px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted-2);
+      margin-bottom:18px;
+    }
+
+    .score{
+      font-family:"Cinzel",serif;
+      font-size:110px;
+      line-height:1;
+      margin-bottom:10px;
+    }
+
+    .score-state{
+      display:inline-flex;
+      align-items:center;
+      padding:10px 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-bottom:18px;
+    }
+
+    .score-copy{
+      color:var(--muted);
+      line-height:1.75;
+      font-size:15px;
+    }
+
+    .intelligence-panel{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      padding:34px;
+    }
+
+    .intel-kicker{
+      font-size:11px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted-2);
+      margin-bottom:18px;
+    }
+
+    .intel-title{
+      font-family:"Cinzel",serif;
+      font-size:34px;
+      line-height:1.18;
+      margin-bottom:18px;
+      max-width:760px;
+    }
+
+    .intel-copy{
+      font-size:16px;
+      line-height:1.9;
+      color:var(--muted);
+      max-width:880px;
+    }
+
+    .status-grid{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:16px;
+      margin-bottom:28px;
+    }
+
+    .status-card{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+      padding:18px;
+    }
+
+    .status-label{
+      font-size:10px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:var(--muted-2);
+      margin-bottom:12px;
+    }
+
+    .status-value{
+      font-size:14px;
+      line-height:1.6;
+      font-weight:600;
+    }
+
+    .section{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+      padding:30px;
+      margin-bottom:22px;
+    }
+
+    .section-kicker{
+      font-size:11px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted-2);
+      margin-bottom:14px;
+    }
+
+    .section-title{
+      font-family:"Cinzel",serif;
+      font-size:28px;
+      margin-bottom:18px;
+      letter-spacing:.04em;
+    }
+
+    .section-copy{
+      color:var(--muted);
+      line-height:1.9;
+      font-size:15px;
+      max-width:980px;
+    }
+
+    .breakdown-grid{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:16px;
+      margin-top:22px;
+    }
+
+    .break-card{
+      border:1px solid var(--line-soft);
+      background:rgba(255,255,255,.015);
+      padding:18px;
+    }
+
+    .break-layer{
+      font-size:11px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:var(--muted-2);
+      margin-bottom:14px;
+    }
+
+    .break-status{
+      font-weight:700;
+      margin-bottom:10px;
+      font-size:15px;
+    }
+
+    .severity{
+      display:inline-flex;
+      padding:6px 10px;
+      font-size:10px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .high{
+      background:rgba(211,93,93,.12);
+      color:#ffb5b5;
+    }
+
+    .moderate{
+      background:rgba(212,170,79,.12);
+      color:#ffe1a6;
+    }
+
+    .low{
+      background:rgba(94,185,127,.12);
+      color:#c5ffd9;
+    }
+
+    .bullet-list{
+      margin-top:18px;
+      display:grid;
+      gap:12px;
+    }
+
+    .bullet{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .bullet-dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--gold);
+      margin-top:10px;
+      flex-shrink:0;
+    }
+
+    .prediction-box{
+      border-left:3px solid var(--gold);
+      padding-left:18px;
+      margin-top:20px;
+    }
+
+    .cta-zone{
+      margin-top:34px;
+      border:1px solid rgba(201,162,39,.22);
+      background:linear-gradient(180deg, rgba(201,162,39,.05), rgba(255,255,255,.01));
+      padding:34px;
+      text-align:center;
+    }
+
+    .cta-title{
+      font-family:"Cinzel",serif;
+      font-size:30px;
+      margin-bottom:16px;
+      letter-spacing:.04em;
+    }
+
+    .cta-copy{
+      color:var(--muted);
+      line-height:1.8;
+      max-width:860px;
+      margin:0 auto 26px;
+    }
+
+    .cta-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px 34px;
+      border:1px solid var(--gold);
+      background:rgba(201,162,39,.05);
+      color:var(--text);
+      text-decoration:none;
+      font-family:"Cinzel",serif;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      transition:.18s ease;
+    }
+
+    .cta-btn:hover{
+      background:var(--gold);
+      color:#111;
+      transform:translateY(-1px);
+    }
+
+    .footer{
+      margin-top:30px;
+      text-align:center;
+      font-size:12px;
+      color:var(--muted-2);
+    }
+
+    .footer a{
+      color:#c7ced6;
+      text-decoration:none;
+    }
+
+    @media(max-width:1180px){
+
+      .hero{
+        grid-template-columns:1fr;
+      }
+
+      .status-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .breakdown-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+    }
+
+    @media(max-width:760px){
+
+      .page{
+        width:92vw;
+      }
+
+      .status-grid,
+      .breakdown-grid{
+        grid-template-columns:1fr;
+      }
+
+      .score{
+        font-size:78px;
+      }
+
+      .intel-title{
+        font-size:28px;
+      }
+
+      .section-title{
+        font-size:24px;
+      }
+
+    }
+
+  </style>
 </head>
 
 <body>
 
-<div class="container">
+  <main class="page">
 
-<h1>Business Assessment</h1>
-<p>This assessment reflects how your business is currently operating and what is limiting its ability to grow consistently.</p>
+    <div class="topbar">
 
-<!-- SCORE -->
-<div class="panel">
-  <div class="score" id="score">--</div>
-  <p id="score-text"></p>
-</div>
+      <div class="system-id">
+        <div class="system-kicker">Phoenix Business System</div>
+        <div class="system-title">Operational Intelligence Dossier</div>
+      </div>
 
-<!-- EXECUTIVE SUMMARY -->
-<h2>Executive Summary</h2>
-<div class="panel">
-<p id="exec-summary"></p>
-</div>
+      <div class="classification">
+        PSEQ QUALIFICATION REVIEW
+      </div>
 
-<!-- PRIMARY CONSTRAINT -->
-<h2>Primary Constraint to Growth</h2>
-<div class="panel">
-<p id="primary-constraint"></p>
-</div>
+    </div>
 
-<!-- SUPPORTING ISSUES -->
-<h2>Supporting Issues</h2>
-<div class="panel">
-<ul id="supporting-issues"></ul>
-</div>
+    <!-- HERO -->
 
-<!-- REVENUE IMPACT -->
-<h2>Revenue Impact</h2>
-<div class="panel">
-<p id="revenue-impact"></p>
-</div>
+    <section class="hero">
 
-<!-- OPERATIONAL IMPACT -->
-<h2>Operational Impact</h2>
-<div class="panel">
-<p id="operational-impact"></p>
-</div>
+      <div class="score-panel">
 
-<!-- RISK -->
-<h2>Risk Outlook</h2>
-<div class="panel">
-<p id="risk-outlook"></p>
-</div>
+        <div class="score-label">
+          Operational Stability Index
+        </div>
 
-<!-- CORRECTION PRIORITIES -->
-<h2>Correction Priorities</h2>
-<div class="panel">
-<ul id="priorities"></ul>
-</div>
+        <div class="score">
+          61
+        </div>
 
-<!-- IMMEDIATE VALUE LAYER -->
-<h2>What to Address Immediately</h2>
-<div class="panel">
-<p id="immediate-action"></p>
-<ul id="immediate-list"></ul>
-</div>
+        <div class="score-state">
+          Conditional Readiness
+        </div>
 
-<h2>What Is Likely Costing You Revenue Today</h2>
-<div class="panel">
-<ul id="loss-list"></ul>
-<p id="loss-summary"></p>
-</div>
+        <div class="score-copy">
+          Current operations show active market engagement,
+          but structural instability is suppressing consistent
+          revenue conversion and scalable operational continuity.
+        </div>
 
-<h2>What Will Improve First</h2>
-<div class="panel">
-<ul id="improve-list"></ul>
-</div>
+      </div>
 
-<h2>Why This Matters Now</h2>
-<div class="panel">
-<p id="why-now"></p>
-</div>
+      <div class="intelligence-panel">
 
-<!-- CTA -->
-<div class="button" onclick="window.location.href='probe.html'">
-Continue to Precision Business Assessment
-</div>
+        <div class="intel-kicker">
+          System Interpretation
+        </div>
 
-</div>
+        <h1 class="intel-title">
+          Growth activity is present,
+          but operational sequencing instability
+          is preventing reliable scale progression.
+        </h1>
 
-<script>
+        <div class="intel-copy">
 
-const data = JSON.parse(localStorage.getItem("pbb_full") || "{}");
-const bottleneck = (data.biggest_bottleneck || "").toLowerCase();
+          The system detected evidence of active business momentum,
+          but identified structural execution friction across
+          conversion handling, operational continuity, workflow discipline,
+          and scalable process enforcement.
 
-let score = 61;
-let scoreText = "Your business is active but not yet stable enough to produce consistent and predictable growth.";
+          <br><br>
 
-let execSummary = "";
-let primaryConstraint = "";
-let revenueImpact = "";
-let operationalImpact = "";
-let risk = "";
-let whyNow = "";
+          Current operating conditions suggest that business growth
+          is relying more heavily on reactive execution behavior
+          than stabilized operational infrastructure.
 
-let supporting = [];
-let priorities = [];
-let immediateList = [];
-let lossList = [];
-let improveList = [];
+          <br><br>
 
-// SALES CASE
-if (bottleneck === "sales") {
+          This condition commonly creates:
+          inconsistent revenue performance,
+          stalled growth momentum,
+          execution fatigue,
+          and increasing operational drag under scale pressure.
 
-execSummary = "Your business is generating interest, but that interest is not converting into consistent revenue. The issue is not demand — it is how your business turns interest into paying clients.";
+        </div>
 
-primaryConstraint = "Your current sales approach is not consistently moving prospects from interest to purchase.";
+      </div>
 
-supporting = [
-"Offer positioning lacks clarity or urgency",
-"Buyer journey is not structured clearly",
-"Sales conversations are not consistently leading to decisions",
-"Prospects lose momentum before committing"
-];
+    </section>
 
-revenueImpact = "Revenue is being lost due to missed conversions, slow deal flow, and inconsistent closing.";
+    <!-- STATUS GRID -->
 
-operationalImpact = "Time and effort are being spent without proportional results, creating instability in performance.";
+    <section class="status-grid">
 
-risk = "Without correction, growth will remain inconsistent regardless of effort or marketing.";
+      <div class="status-card">
+        <div class="status-label">Operator Condition</div>
+        <div class="status-value">Structurally Active</div>
+      </div>
 
-priorities = [
-"Improve how prospects move from interest to purchase",
-"Strengthen offer clarity",
-"Reduce friction in the buying process",
-"Establish a more consistent sales approach"
-];
+      <div class="status-card">
+        <div class="status-label">Execution Tier</div>
+        <div class="status-value">Transitional</div>
+      </div>
 
-immediateList = [
-"Clarify what you are offering in simple terms",
-"Make it easier for prospects to say yes",
-"Ensure every interaction leads to a decision"
-];
+      <div class="status-card">
+        <div class="status-label">Risk Class</div>
+        <div class="status-value">Moderate</div>
+      </div>
 
-lossList = [
-"Prospects leaving without buying",
-"Time spent on non-converting leads",
-"Delayed or lost deals"
-];
+      <div class="status-card">
+        <div class="status-label">Primary Failure Pattern</div>
+        <div class="status-value">Revenue Conversion Instability</div>
+      </div>
 
-improveList = [
-"Higher conversion rates",
-"Faster deal flow",
-"More stable revenue"
-];
+      <div class="status-card">
+        <div class="status-label">Correction Route</div>
+        <div class="status-value">Structure Alignment</div>
+      </div>
 
-whyNow = "Right now, growth is being limited by how your business converts demand into revenue, not by lack of effort.";
-}
+    </section>
 
-// DEFAULT
-else {
-execSummary = "Your business is currently limited by structural inconsistencies that are affecting performance.";
-primaryConstraint = "There is no clearly defined dominant constraint, which is limiting growth.";
-supporting = [
-"Lack of clarity in operations",
-"Inconsistent performance",
-"Unclear direction"
-];
-revenueImpact = "Revenue is inconsistent due to lack of structure.";
-operationalImpact = "Execution lacks consistency and reliability.";
-risk = "Growth will remain unpredictable.";
-priorities = [
-"Clarify structure",
-"Define priorities",
-"Stabilize operations"
-];
-immediateList = [
-"Identify primary issue",
-"Simplify operations",
-"Focus on one improvement area"
-];
-lossList = [
-"Wasted effort",
-"Missed opportunities"
-];
-improveList = [
-"Better clarity",
-"Improved consistency"
-];
-whyNow = "Without structure, performance will remain inconsistent.";
-}
+    <!-- STRUCTURAL BREAKDOWN -->
 
-// RENDER
-document.getElementById("score").textContent = score;
-document.getElementById("score-text").textContent = scoreText;
+    <section class="section">
 
-document.getElementById("exec-summary").textContent = execSummary;
-document.getElementById("primary-constraint").textContent = primaryConstraint;
+      <div class="section-kicker">
+        Structural Breakdown Matrix
+      </div>
 
-document.getElementById("revenue-impact").textContent = revenueImpact;
-document.getElementById("operational-impact").textContent = operationalImpact;
-document.getElementById("risk-outlook").textContent = risk;
-document.getElementById("why-now").textContent = whyNow;
+      <h2 class="section-title">
+        Operational Layer Assessment
+      </h2>
 
-function renderList(id, arr){
-  document.getElementById(id).innerHTML = arr.map(i=>`<li>${i}</li>`).join("");
-}
+      <div class="section-copy">
+        The system evaluated multiple operational layers
+        associated with execution continuity, revenue predictability,
+        workflow stability, and scalable organizational alignment.
+      </div>
 
-renderList("supporting-issues", supporting);
-renderList("priorities", priorities);
-renderList("immediate-list", immediateList);
-renderList("loss-list", lossList);
-renderList("improve-list", improveList);
+      <div class="breakdown-grid">
 
-</script>
+        <div class="break-card">
+          <div class="break-layer">Offer Positioning</div>
+          <div class="break-status">Degraded</div>
+          <div class="severity high">High Severity</div>
+        </div>
+
+        <div class="break-card">
+          <div class="break-layer">Conversion Flow</div>
+          <div class="break-status">Unstable</div>
+          <div class="severity high">High Severity</div>
+        </div>
+
+        <div class="break-card">
+          <div class="break-layer">Execution Rhythm</div>
+          <div class="break-status">Fragmented</div>
+          <div class="severity moderate">Moderate Severity</div>
+        </div>
+
+        <div class="break-card">
+          <div class="break-layer">Sequencing Discipline</div>
+          <div class="break-status">Weak</div>
+          <div class="severity high">High Severity</div>
+        </div>
+
+        <div class="break-card">
+          <div class="break-layer">Revenue Predictability</div>
+          <div class="break-status">Volatile</div>
+          <div class="severity high">High Severity</div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- REVENUE LEAKAGE -->
+
+    <section class="section">
+
+      <div class="section-kicker">
+        Revenue Leakage Analysis
+      </div>
+
+      <h2 class="section-title">
+        Conversion Momentum Is Collapsing
+        Before Commitment Stabilization
+      </h2>
+
+      <div class="section-copy">
+
+        The system detected active demand generation behavior,
+        but identified instability inside conversion sequencing
+        and operational follow-through infrastructure.
+
+        <br><br>
+
+        Revenue leakage is likely occurring through:
+      </div>
+
+      <div class="bullet-list">
+
+        <div class="bullet">
+          <div class="bullet-dot"></div>
+          <div>Inconsistent conversion handling and buyer progression management</div>
+        </div>
+
+        <div class="bullet">
+          <div class="bullet-dot"></div>
+          <div>Weak operational sequencing between lead generation and commitment</div>
+        </div>
+
+        <div class="bullet">
+          <div class="bullet-dot"></div>
+          <div>Offer clarity degradation under real buyer evaluation conditions</div>
+        </div>
+
+        <div class="bullet">
+          <div class="bullet-dot"></div>
+          <div>Execution fatigue caused by reactive operational dependency</div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- PREDICTIVE OUTLOOK -->
+
+    <section class="section">
+
+      <div class="section-kicker">
+        Predictive Operational Outlook
+      </div>
+
+      <h2 class="section-title">
+        Current Operating Conditions
+        Are Unlikely To Self-Correct
+      </h2>
+
+      <div class="prediction-box">
+
+        <div class="section-copy">
+
+          If current execution conditions continue unchanged:
+
+          <br><br>
+
+          • revenue inconsistency will persist<br>
+          • marketing efficiency will continue degrading<br>
+          • workflow friction will compound under scale pressure<br>
+          • operational dependency risk will increase<br>
+          • growth momentum will remain unstable despite effort
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- CORRECTIVE ROUTING -->
+
+    <section class="cta-zone">
+
+      <div class="section-kicker">
+        Corrective Sequencing Recommendation
+      </div>
+
+      <h2 class="cta-title">
+        PSEQ Review Eligibility: QUALIFIED
+      </h2>
+
+      <div class="cta-copy">
+
+        Current operator condition indicates
+        that informational insight alone is unlikely
+        to produce stable operational correction.
+
+        <br><br>
+
+        Structural sequencing,
+        execution alignment,
+        workflow stabilization,
+        and corrective implementation oversight
+        are recommended before additional scale pressure is introduced.
+
+      </div>
+
+      <a href="https://pseq.risingphoenixhq.com"
+         class="cta-btn">
+        Enter Corrective Sequencing Review
+      </a>
+
+    </section>
+
+    <div class="footer">
+
+      © Rising Phoenix Enterprises
+      &nbsp; | &nbsp;
+
+      <a href="/terms.html">Terms</a>
+
+      &nbsp; | &nbsp;
+
+      <a href="/privacy.html">Privacy</a>
+
+      &nbsp; | &nbsp;
+
+      <a href="/">Home</a>
+
+    </div>
+
+  </main>
 
 </body>
 </html> 
